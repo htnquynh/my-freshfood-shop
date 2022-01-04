@@ -21,6 +21,5 @@
     "postcss": "^8.4.5",
     "tailwindcss": "^3.0.9",
     "vite": "^2.7.2"
-  },
-  "proxy": "https://shopfreshapi.herokuapp.com"
+  }
 }
