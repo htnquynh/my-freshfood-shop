@@ -37,7 +37,7 @@ export default {
   methods: {
     imageProduct(name) {
       try {
-          let img = "/products/" + name;
+          let img = "https://shopfreshapi.herokuapp.com/products/" + name;
           return img;
       } catch (error) {
           console.log(error);

@@ -83,7 +83,7 @@ export default {
     ...mapActions(["getUserCart", "deleteWishlistItem", "addItemsToWishlist", "start_load", "stop_load"]),
     imageProduct(name) {
       try {
-          let img = "/products/" + name;
+          let img = "https://shopfreshapi.herokuapp.com/products/" + name;
           return img;
       } catch (error) {
           console.log(error);

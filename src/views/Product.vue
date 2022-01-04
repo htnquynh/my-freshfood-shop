@@ -243,7 +243,7 @@ export default {
       ]
     ),
     imageProduct(name) {
-      return "/products/" + name;
+      return "https://shopfreshapi.herokuapp.com/products/" + name;
     },
     minusQuantity() {
       if (this.quantity > 1) {

@@ -177,7 +177,7 @@ export default {
   methods: {
     ...mapActions(["getGroups", "getUserCart", "start_load", "stop_load"]),
     imageProduct(name) {
-      return "/group/" + name;
+      return "https://shopfreshapi.herokuapp.com/group/" + name;
     },
     checkQuantity(){
       for (const item of this.selectedGroup.material) {

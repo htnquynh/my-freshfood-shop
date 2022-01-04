@@ -68,7 +68,7 @@ export default {
     ...mapActions(["setSelectedGroup",]),
     imageGroup(name) {
       try {
-        let img = "/group/" + name;
+        let img = "https://shopfreshapi.herokuapp.com/group/" + name;
         return img;
       } catch (error) {
         console.log(error);
