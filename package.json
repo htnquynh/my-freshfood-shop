@@ -10,6 +10,7 @@
     "axios": "^0.24.0",
     "lodash": "^4.17.21",
     "vue": "^3.2.25",
+    "vue-fb-customer-chat": "^0.2.1",
     "vue-router": "^4.0.12",
     "vue-sweetalert2": "^5.0.2",
     "vuex": "^4.0.2",
