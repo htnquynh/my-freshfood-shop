@@ -10,18 +10,13 @@ import store from "./store";
 
 import VueSweetalert2 from "vue-sweetalert2";
 import "sweetalert2/dist/sweetalert2.min.css";
-import VueFbCustomerChat from "vue-fb-customer-chat";
+
 // Vue.use(VueSweetalert2);
 
 const app = createApp(App);
 app.use(router);
 app.use(store);
 app.use(VueSweetalert2);
-app.use(VueFbCustomerChat, {
-  page_id: 112927988067091, //  change 'null' to your Facebook Page ID,
-  theme_color: "#333333", // theme color in HEX
-  locale: "en_US", // default 'en_US'
-});
 
 app.config.globalProperties.$filters = {
   toVND: function (value) {
