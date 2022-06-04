@@ -6,6 +6,11 @@ a {
   cursor: pointer;
 }
 
+.sc-chat-window {
+  z-index: 1000 !important;
+  height: 400px !important;
+}
+
 .input-text {
   width: 100%;
   display: -webkit-box;

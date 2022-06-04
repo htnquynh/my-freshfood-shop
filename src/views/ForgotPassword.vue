@@ -22,20 +22,12 @@
 </template>
 
 <script>
-import TheHeader from '../components/TheHeader.vue';
-import TheFooter from '../components/TheFooter.vue';
-import TheSubscribe from '../components/TheSubscribe.vue';
-import MiniCart from '../components/MiniCart.vue';
 
 import { mapActions } from "vuex";
 import UserAPI from '../api/UserAPI';
 
 export default {
   components: {
-    TheHeader,
-    TheFooter,
-    TheSubscribe,
-    MiniCart,
   },
   data() {
     return {

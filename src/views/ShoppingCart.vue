@@ -70,20 +70,11 @@
 
 <script>
 
-import TheHeader from '../components/TheHeader.vue';
-import TheFooter from '../components/TheFooter.vue';
-import TheSubscribe from '../components/TheSubscribe.vue';
-import MiniCart from '../components/MiniCart.vue';
-
 import ShoppingCartItem from '../components/ShoppingCartItem.vue';
 import { mapActions, mapGetters } from "vuex";
 
 export default {
   components: {
-    TheHeader,
-    TheFooter,
-    TheSubscribe,
-    MiniCart,
     ShoppingCartItem,
   },
   data() {
