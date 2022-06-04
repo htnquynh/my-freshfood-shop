@@ -6,6 +6,7 @@ import "virtual:windi-base.css";
 import "virtual:windi-components.css";
 import "./index.css";
 import "virtual:windi-utilities.css";
+import Chat from 'vue3-beautiful-chat'
 
 // vuex
 import store from "./store";
@@ -19,6 +20,7 @@ const app = createApp(App);
 app.use(router);
 app.use(store);
 app.use(VueSweetalert2);
+app.use(Chat);
 
 app.config.globalProperties.$filters = {
   toVND: function (value) {
