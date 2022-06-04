@@ -1,81 +1,58 @@
 <template>
-  <div class="product-wrapper">
-    <div class="product">
-      <img
-        class="product-image"
-        :src="imageProduct(product.image)"
-        @click="detailProduct()"
-      />
 
-      <div class="product-action">
-        <a class="btn-compare" @click="compare(product._id)">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            height="24px"
-            viewBox="0 0 24 24"
-            width="24px"
-            fill="currentColor"
-          >
-            <path d="M0 0h24v24H0V0z" fill="none" />
-            <path
-              d="M9.01 14H3c-.55 0-1 .45-1 1s.45 1 1 1h6.01v1.79c0 .45.54.67.85.35l2.78-2.79c.19-.2.19-.51 0-.71l-2.78-2.79c-.31-.32-.85-.09-.85.35V14zm5.98-2.21V10H21c.55 0 1-.45 1-1s-.45-1-1-1h-6.01V6.21c0-.45-.54-.67-.85-.35l-2.78 2.79c-.19.2-.19.51 0 .71l2.78 2.79c.31.31.85.09.85-.36z"
-            />
-          </svg>
-        </a>
+  <div class="px-4 py-4 bg-white">
+    <div class="aspect-square flex items-center">
+      <img class="" :src="imageProduct(product.image)" alt="Product image" @click="detailProduct()" />
+    </div>
 
-        <a
-          v-show="product.quantity_remaining > 0"
-          class="btn-add-to-cart"
-          @click="addItemToCart()"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            height="24px"
-            viewBox="0 0 24 24"
-            width="24px"
-            fill="currentColor"
-          >
-            <path d="M0 0h24v24H0V0z" fill="none" />
+    <div class="space-y-4">
+      <div class="flex justify-between items-center gap-2">
+        <ButtonIcon @click="compare(product._id)" class="flex-shrink-0">
+          <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor">
             <path
-              d="M18 13h-5v5c0 .55-.45 1-1 1s-1-.45-1-1v-5H6c-.55 0-1-.45-1-1s.45-1 1-1h5V6c0-.55.45-1 1-1s1 .45 1 1v5h5c.55 0 1 .45 1 1s-.45 1-1 1z"
-            />
+              d="M32 160h319.9l.0791 72c0 9.547 5.652 18.19 14.41 22c8.754 3.812 18.93 2.078 25.93-4.406l112-104c10.24-9.5 10.24-25.69 0-35.19l-112-104c-6.992-6.484-17.17-8.217-25.93-4.408c-8.758 3.816-14.41 12.46-14.41 22L351.9 96H32C14.31 96 0 110.3 0 127.1S14.31 160 32 160zM480 352H160.1L160 279.1c0-9.547-5.652-18.19-14.41-22C136.9 254.2 126.7 255.9 119.7 262.4l-112 104c-10.24 9.5-10.24 25.69 0 35.19l112 104c6.992 6.484 17.17 8.219 25.93 4.406C154.4 506.2 160 497.5 160 488L160.1 416H480c17.69 0 32-14.31 32-32S497.7 352 480 352z" />
           </svg>
-        </a>
+        </ButtonIcon>
 
-        <a class="btn-add-to-wishlist" @click="addToWishlist(product)">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            height="24px"
-            viewBox="0 0 24 24"
-            width="24px"
-            fill="currentColor"
-          >
-            <path d="M0 0h24v24H0V0z" fill="none" />
+        <ButtonIcon v-show="product.quantity_remaining > 0" @click="addItemToCart()">
+          <svg viewBox="0 0 416 416" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
-              d="M19.66 3.99c-2.64-1.8-5.9-.96-7.66 1.1-1.76-2.06-5.02-2.91-7.66-1.1-1.4.96-2.28 2.58-2.34 4.29-.14 3.88 3.3 6.99 8.55 11.76l.1.09c.76.69 1.93.69 2.69-.01l.11-.1c5.25-4.76 8.68-7.87 8.55-11.75-.06-1.7-.94-3.32-2.34-4.28zM12.1 18.55l-.1.1-.1-.1C7.14 14.24 4 11.39 4 8.5 4 6.5 5.5 5 7.5 5c1.54 0 3.04.99 3.57 2.36h1.87C13.46 5.99 14.96 5 16.5 5c2 0 3.5 1.5 3.5 3.5 0 2.89-3.14 5.74-7.9 10.05z"
-            />
+              d="M416 208C416 225.69 401.67 240.01 384 240.01H240V384.01C240 401.7 225.67 416 208 416C190.33 416 176 401.7 176 384.01V240.01H32C14.33 240.01 0 225.69 0 208C0 190.31 14.33 176.01 32 176.01H176V32.01C176 14.32 190.33 0 208 0C225.67 0 240 14.32 240 32.01V176.01H384C401.7 176 416 190.3 416 208Z"
+              fill="currentColor" />
           </svg>
-        </a>
+        </ButtonIcon>
+
+        <ButtonIcon @click="addToWishlist(product)">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor">
+            <path
+              d="M244 84L255.1 96L267.1 84.02C300.6 51.37 347 36.51 392.6 44.1C461.5 55.58 512 115.2 512 185.1V190.9C512 232.4 494.8 272.1 464.4 300.4L283.7 469.1C276.2 476.1 266.3 480 256 480C245.7 480 235.8 476.1 228.3 469.1L47.59 300.4C17.23 272.1 0 232.4 0 190.9V185.1C0 115.2 50.52 55.58 119.4 44.1C164.1 36.51 211.4 51.37 244 84C243.1 84 244 84.01 244 84L244 84zM255.1 163.9L210.1 117.1C188.4 96.28 157.6 86.4 127.3 91.44C81.55 99.07 48 138.7 48 185.1V190.9C48 219.1 59.71 246.1 80.34 265.3L256 429.3L431.7 265.3C452.3 246.1 464 219.1 464 190.9V185.1C464 138.7 430.4 99.07 384.7 91.44C354.4 86.4 323.6 96.28 301.9 117.1L255.1 163.9z" />
+          </svg>
+        </ButtonIcon>
       </div>
-
-      <div class="product-spec">
-        <p class="product-category">{{ product.category }}</p>
-        <p class="product-name">{{ product.name }}</p>
-        <div class="product-price-unit">
-          <p class="product-price">{{ $filters.toVND(product.price) }}</p>
-          <p class="product-unit">/ 1 kg</p>
+      <div>
+        <p class="text-gray-700">{{ product.category }}</p>
+        <p class="text-lg font-bold">{{ product.name }}</p>
+        <div class="pt-2 flex items-center justify-end gap-1">
+          <p class="font-bold">{{ $filters.toVND(product.price) }}</p>
+          <p class="">/ 1 kg</p>
         </div>
       </div>
     </div>
+
+
   </div>
 </template>
 
 <script>
+import ButtonIcon from './base/ButtonIcon.vue'
 import { mapGetters, mapActions } from "vuex";
 import CartAPI from "../api/CartAPI";
 
 export default {
   props: ["product"],
+  components: {
+    ButtonIcon
+  },
   data() {
     return {};
   },
@@ -157,28 +134,28 @@ export default {
         let config = {
           headers: { Authorization: "bearer " + token },
         };
-        let items = [{product: this.product._id, quantity: 1, price: this.product.price}];
+        let items = [{ product: this.product._id, quantity: 1, price: this.product.price }];
         await CartAPI.add(items, config)
-        .then((res) => {
-          console.log(res.data);
-          this.getUserCart().then(() => {
+          .then((res) => {
+            console.log(res.data);
+            this.getUserCart().then(() => {
+              this.stop_load();
+              this.$swal.fire(
+                'Oh great!',
+                'Add product to cart successfully!',
+                'success'
+              );
+            });
+          })
+          .catch((error) => {
+            console.log(error);
             this.stop_load();
             this.$swal.fire(
-              'Oh great!',
-              'Add product to cart successfully!',
-              'success'
+              'Oh no!',
+              'Something went wrong. Double check your work.',
+              'fail'
             );
           });
-        })
-        .catch((error) => {
-          console.log(error);
-          this.stop_load();
-          this.$swal.fire(
-            'Oh no!',
-            'Something went wrong. Double check your work.',
-            'fail'
-          );
-        });
       } else {
         this.$swal.fire(
           "Login to your account",
@@ -218,94 +195,5 @@ export default {
 };
 </script>
 
-<style lang="postcss" scoped>
-.product-wrapper {
-  @apply p-4;
-  @apply bg-white;
-  @apply w-full;
-  transition: 0.3s;
-}
-
-.product-wrapper:hover {
-  transform: scale(1.1);
-  box-shadow: rgba(57, 42, 35, 0.08) 0px 4px 12px;
-}
-
-.product {
-  @apply flex flex-col items-stretch;
-}
-
-.product-image {
-  background-color: #faf9f5;
-  @apply mx-auto;
-  @apply w-52 h-52;
-  @apply rounded-full;
-  @apply p-4;
-  @apply object-contain;
-  @apply cursor-pointer;
-}
-
-.product-spec {
-  @apply p-4;
-  @apply flex flex-col;
-}
-
-.product-category {
-  @apply text-base;
-}
-
-.product-name {
-  @apply text-lg font-bold;
-}
-
-.product-price-unit {
-  @apply flex flex-row items-center gap-2;
-}
-
-.product-price {
-  @apply text-base font-black;
-  @apply text-gold-500;
-}
-
-.product-unit {
-  @apply text-base;
-}
-
-.product-action {
-  @apply px-4 pt-2 pb-0;
-  @apply flex flex-row justify-evenly items-center;
-  @apply bg-opacity-20;
-}
-
-.product-action > a {
-  @apply p-2;
-  @apply rounded-xl;
-  transition: 0.3s;
-}
-
-.product-action > a:hover {
-  background-color: #392a23;
-  box-shadow: rgba(255, 201, 40, 0.5) 0px 8px 24px 0px;
-  transform: scale(1.05) translateY(-6px);
-  @apply text-gold-500;
-}
-
-.product-action > a:hover > svg {
-  @apply transform scale-125;
-}
-
-.product-action > a > svg {
-  @apply w-6 h-6;
-}
-
-.btn-compare,
-.btn-add-to-wishlist {
-  background-color: #faf9f5;
-  @apply text-gold-500;
-}
-
-.btn-add-to-cart {
-  @apply bg-gold-500;
-  @apply text-gold-100;
-}
+<style scoped>
 </style>

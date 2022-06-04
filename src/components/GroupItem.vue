@@ -1,59 +1,34 @@
 <template>
-  <div class="group-item-wrapper">
-    <div class="group-item">
-      <img class="group-item-image" :src="imageProduct(product.image)" >
-      <div class="group-item-spec">
-        <div class="product-spec">
-          <p class="product-category">{{ product.category }}</p>
-          <p class="product-name">{{ product.name }}</p>
-          <div class="product-price-unit">
-            <p class="product-price">{{ $filters.toVND(product.price) }}</p>
-            <p class="product-unit">/ 1 kg</p>
-          </div>
-        </div>
+  <div class="flex-shrink-0 flex gap-2 w-56 h-16 bg-white px-2 py-3">
+    <div class="aspect-square w-16 flex items-center">
+      <img class="object-contain" :src="imageProduct(product.image)" alt="Image" />
+    </div>
 
-        <div class="product-action">
-          <button 
-            v-show="product.quantity_remaining > 0" 
-            class="btn-small-icon btn-add-to-cart"
-            @click="addItemToCart()">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              height="24px"
-              viewBox="0 0 24 24"
-              width="24px"
-              fill="currentColor"
-            >
-              <path 
-                d="M0 0h24v24H0V0z" 
-                fill="none"
-              />
-              <path
-                d="M18 13h-5v5c0 .55-.45 1-1 1s-1-.45-1-1v-5H6c-.55 0-1-.45-1-1s.45-1 1-1h5V6c0-.55.45-1 1-1s1 .45 1 1v5h5c.55 0 1 .45 1 1s-.45 1-1 1z"
-              />
-            </svg>
-          </button>
-
-          <button 
-            class="btn-small-icon btn-add-to-wishlist"
-            @click="addToWishlist(product)">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              height="24px"
-              viewBox="0 0 24 24"
-              width="24px"
-              fill="currentColor"
-            >
-              <path 
-                d="M0 0h24v24H0V0z" 
-                fill="none"
-              />
-              <path
-                d="M19.66 3.99c-2.64-1.8-5.9-.96-7.66 1.1-1.76-2.06-5.02-2.91-7.66-1.1-1.4.96-2.28 2.58-2.34 4.29-.14 3.88 3.3 6.99 8.55 11.76l.1.09c.76.69 1.93.69 2.69-.01l.11-.1c5.25-4.76 8.68-7.87 8.55-11.75-.06-1.7-.94-3.32-2.34-4.28zM12.1 18.55l-.1.1-.1-.1C7.14 14.24 4 11.39 4 8.5 4 6.5 5.5 5 7.5 5c1.54 0 3.04.99 3.57 2.36h1.87C13.46 5.99 14.96 5 16.5 5c2 0 3.5 1.5 3.5 3.5 0 2.89-3.14 5.74-7.9 10.05z"
-              />
-            </svg>
-          </button>
+    <div class="flex-1 flex gap-2 items-start">
+      <div class="flex-1 text-sm space-y-1">
+        <!-- <p class="product-category">{{ product.category }}</p> -->
+        <p class="font-semibold sp">{{ product.name }}</p>
+        <div class="flex items-center gap-1">
+          <p class="text-violet-600 font-semibold">{{ $filters.toVND(product.price) }}</p>
+          <p class="">/ 1 kg</p>
         </div>
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <button v-show="product.quantity_remaining > 0" class="w-4 h-4 text-violet-800" @click="addItemToCart()">
+          <svg viewBox="0 0 416 416" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M416 208C416 225.69 401.67 240.01 384 240.01H240V384.01C240 401.7 225.67 416 208 416C190.33 416 176 401.7 176 384.01V240.01H32C14.33 240.01 0 225.69 0 208C0 190.31 14.33 176.01 32 176.01H176V32.01C176 14.32 190.33 0 208 0C225.67 0 240 14.32 240 32.01V176.01H384C401.7 176 416 190.3 416 208Z"
+              fill="currentColor" />
+          </svg>
+        </button>
+
+        <button class="w-4 h-4 text-violet-800" @click="addToWishlist(product)">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor">
+            <path
+              d="M244 84L255.1 96L267.1 84.02C300.6 51.37 347 36.51 392.6 44.1C461.5 55.58 512 115.2 512 185.1V190.9C512 232.4 494.8 272.1 464.4 300.4L283.7 469.1C276.2 476.1 266.3 480 256 480C245.7 480 235.8 476.1 228.3 469.1L47.59 300.4C17.23 272.1 0 232.4 0 190.9V185.1C0 115.2 50.52 55.58 119.4 44.1C164.1 36.51 211.4 51.37 244 84C243.1 84 244 84.01 244 84L244 84zM255.1 163.9L210.1 117.1C188.4 96.28 157.6 86.4 127.3 91.44C81.55 99.07 48 138.7 48 185.1V190.9C48 219.1 59.71 246.1 80.34 265.3L256 429.3L431.7 265.3C452.3 246.1 464 219.1 464 190.9V185.1C464 138.7 430.4 99.07 384.7 91.44C354.4 86.4 323.6 96.28 301.9 117.1L255.1 163.9z" />
+          </svg>
+        </button>
       </div>
     </div>
   </div>
@@ -71,7 +46,7 @@ export default {
     ...mapGetters(["is_login", "wishlist"]),
   },
   filters: {
-    toVND: function(value) {
+    toVND: function (value) {
       if (typeof value !== "number") {
         value = parseInt(value);
         // return value;
@@ -87,12 +62,12 @@ export default {
   methods: {
     ...mapActions(["getUserCart", "addItemToWishlist", "addItemsToWishlist", "start_load", "stop_load"]),
     imageProduct(name) {
-        try {
-            let img = "https://shopfreshapi.herokuapp.com/products/" + name;
-            return img;
-        } catch (error) {
-            console.log(error);
-        }
+      try {
+        let img = "https://shopfreshapi.herokuapp.com/products/" + name;
+        return img;
+      } catch (error) {
+        console.log(error);
+      }
     },
     async addItemToCart() {
       if (this.is_login) {
@@ -101,27 +76,27 @@ export default {
         let config = {
           headers: { Authorization: "bearer " + token },
         };
-        let items = [{product: this.product._id, quantity: 1, price: this.product.price}];
+        let items = [{ product: this.product._id, quantity: 1, price: this.product.price }];
         await CartAPI.add(items, config)
-        .then((res) => {
-          console.log(res.data);
-          this.stop_load();
-          this.$swal.fire(
-            'Oh great!',
-            'Add product to cart successfully!',
-            'success'
-          );
-          this.getUserCart();
-        })
-        .catch((error) => {
-          console.log(error);
-          this.stop_load();
-          this.$swal.fire(
-            'Oh no!',
-            'Something went wrong. Double check your work.',
-            'fail'
-          );
-        });
+          .then((res) => {
+            console.log(res.data);
+            this.stop_load();
+            this.$swal.fire(
+              'Oh great!',
+              'Add product to cart successfully!',
+              'success'
+            );
+            this.getUserCart();
+          })
+          .catch((error) => {
+            console.log(error);
+            this.stop_load();
+            this.$swal.fire(
+              'Oh no!',
+              'Something went wrong. Double check your work.',
+              'fail'
+            );
+          });
       } else {
         this.stop_load();
         this.$swal.fire(
@@ -162,7 +137,6 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-
 .group-item-wrapper {
   @apply flex-shrink-0;
   @apply p-2;
@@ -252,6 +226,4 @@ export default {
   @apply bg-gold-100 text-gold-500;
   box-shadow: rgba(57, 42, 35, 0.15) 0px 10px 8px -8px;
 }
-
-
 </style>

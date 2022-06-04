@@ -1,100 +1,69 @@
 <template>
-  <div class="home relative">
-    <TheHeader class="header-page"/>
-    <MiniCart/>
-    <div class="page-content">
-      <div class="login-form-wrapper">
-        <div class="form-title">
-          <h2>Create <span class="text-gold-500">Account!</span></h2>
+  <div class="py-12 max-w-xs mx-auto space-y-8">
+    <h2 class="text-4xl font-bold text-center">Sign up</h2>
+
+    <div class="space-y-4">
+      <div class="space-y-4">
+        <div class="space-y-2">
+          <label class="block font-medium">Email</label>
+          <input class="w-full px-3 py-2 border border-black focus:outline-none" type="email" v-model="user.email"
+            @keyup="checkEmail()">
+          <p class="text-sm text-red-600">{{ email_error }}</p>
         </div>
 
-        <div class="login-form">
-          <div class="login-input">
-            <div class="input-text">
-              <label>Email</label>
-              <input 
-                type="email"
-                v-model="user.email"
-                @keyup="checkEmail()"
-              >
-              <p class="error-msg">{{ email_error }}</p>
-            </div>
+        <div class="space-y-2">
+          <label class="block font-medium">Username</label>
+          <input class="w-full px-3 py-2 border border-black focus:outline-none" type="text" v-model="user.username"
+            @keyup="checkUsername()">
+          <p class="text-sm text-red-600">{{ username_error }}</p>
+        </div>
 
-            <div class="input-text">
-              <label>Username</label>
-              <input 
-                type="text"
-                v-model="user.username"
-                @keyup="checkUsername()"
-              >
-              <p class="error-msg">{{ username_error }}</p>
-            </div>
+        <div class="space-y-2">
+          <label class="block font-medium">Password</label>
+          <input class="w-full px-3 py-2 border border-black focus:outline-none" type="password" v-model="user.password"
+            @keyup="checkPassword()">
+          <p class="text-sm text-red-600">{{ password_error }}</p>
+        </div>
 
-            <div class="input-text">
-              <label>Password</label>
-              <input 
-                type="password"
-                v-model="user.password"
-                @keyup="checkPassword()"
-              >
-              <p class="error-msg">{{ password_error }}</p>
-            </div>
+        <div class="space-y-2">
+          <label class="block font-medium">Confirm Password</label>
+          <input class="w-full px-3 py-2 border border-black focus:outline-none" type="password"
+            v-model="confirm_password" @keyup="checkPassword()">
+          <p class="text-sm text-red-600">{{ confirm_password_error }}</p>
+        </div>
+      </div>
 
-            <div class="input-text">
-              <label>Confirm Password</label>
-              <input 
-                type="password"
-                v-model="confirm_password"
-                @keyup="checkPassword()"
-              >
-              <p class="error-msg">{{ confirm_password_error }}</p>
-            </div>
-          </div>
+      <div class="flex justify-between items-center">
+        <label class="check-box">
+          <input v-model="check" type="checkbox" value="remember-me" name="remember">
+          <span class="design"></span>
+          <span class="text">I agree to the Terms & Conditions</span>
+        </label>
+      </div>
 
-          <div class="remember-me-forgot-password">
-            <label class="check-box">
-              <input v-model="check" type="checkbox" value="remember-me" name="remember">
-              <span class="design"></span>
-              <span class="text">I agree to the Terms & Conditions</span>
-            </label>
-          </div>
+      <div class="pt-4 w-full space-y-4">
+        <a class="block text-center w-full px-8 py-3 bg-violet-600 text-white uppercase font-semibold" @click="signup()"
+          :class="{ 'opacity-40': !enableSubmit() }">
+          <span>Create Account</span>
+        </a>
 
-          <div class="login-action">
-            <a class="btn-login" @click="signup()" 
-              :class="{ 'btn-disable' : !enableSubmit()}">
-              <span>Create Account</span>
-            </a>
-
-            <div class="link-sign-up">
-              <p>Already have an account?</p>
-              <router-link to="/login">
-                <a>Sign In</a>
-              </router-link>
-            </div>
-          </div>
+        <div class="flex justify-center gap-3">
+          <p>Already have an account?</p>
+          <router-link to="/login">
+            <a class="font-semibold underline">Sign In</a>
+          </router-link>
         </div>
       </div>
     </div>
-    <TheSubscribe/>
-    <TheFooter/>
   </div>
 </template>
 
 <script>
-import TheHeader from '../components/TheHeader.vue';
-import TheFooter from '../components/TheFooter.vue';
-import TheSubscribe from '../components/TheSubscribe.vue';
-import MiniCart from '../components/MiniCart.vue';
-
 import UserAPI from "../api/UserAPI";
 import { mapActions } from "vuex";
 
 export default {
   components: {
-    TheHeader,
-    TheFooter,
-    TheSubscribe,
-    MiniCart,
   },
   data() {
     return {
@@ -126,7 +95,7 @@ export default {
   computed: {
   },
   filters: {
-    toVND: function(value) {
+    toVND: function (value) {
       if (typeof value !== "number") {
         value = parseInt(value);
         // return value;
@@ -145,7 +114,7 @@ export default {
     },
   },
   created() {
-    
+
   },
   methods: {
     ...mapActions(["start_load", "stop_load"]),
@@ -245,7 +214,7 @@ export default {
     },
     async checkEmailExist(email) {
       await UserAPI.getUserByEmail(email).then((res) => {
-        if(res.data) {
+        if (res.data) {
           return false;
         } else {
           return true;
@@ -256,7 +225,7 @@ export default {
     },
     async checkUsernameExist(username) {
       await UserAPI.getUserByUsername(username).then((res) => {
-        if(res.data) {
+        if (res.data) {
           return false;
         } else {
           return true;
@@ -268,147 +237,3 @@ export default {
   },
 };
 </script>
-
-<style lang="postcss" scoped>
-
-.error-msg {
-  @apply text-sm text-red-600;
-}
-
-.btn-disable {
-  @apply opacity-40;
-}
-
-.home {
-  @apply flex flex-col;
-}
-
-.home > .header-page {
-  @apply w-full;
-}
-
-.page-content {
-  @apply p-0 sm:p-4;
-  @apply bg-white sm:bg-transparent;
-}
-
-.login-form-wrapper {
-  @apply max-w-sm mx-auto;
-  @apply bg-white;
-  @apply px-4 sm:px-6 md:px-8 pb-12 pt-8 sm:pt-10;
-  @apply flex flex-col items-stretch;
-}
-
-/* .login-form-wrapper {
-  @apply max-w-xs mx-auto;
-  @apply px-4 pb-16 md:pb-24;
-  @apply flex flex-col items-start md:items-center gap-2;
-} */
-
-/* .form-title {
-  @apply py-4 md:py-8;
-  @apply flex flex-col md:justify-center gap-2 md:gap-4;
-}
-
-.form-title h2 {
-  @apply text-xl md:text-4xl font-black;
-}
-
-.form-title hr {
-  @apply w-full max-w-3xl;
-  @apply border-t border-secondary;
-}
-
-.login-form {
-  @apply w-full;
-  @apply flex flex-col items-center;
-}
-
-.login-input {
-  @apply w-min;
-  @apply flex flex-col gap-4;
-} */
-
-
-.form-title {
-  @apply pb-6;
-}
-
-.form-title h2 {
-  @apply text-2xl font-extrabold;
-}
-
-.form-title hr {
-  @apply w-full max-w-3xl;
-  @apply border-t border-secondary;
-}
-
-.login-form {
-  @apply w-full;
-  @apply flex flex-col items-center;
-}
-
-.login-input {
-  @apply w-full;
-  @apply flex flex-col gap-4;
-}
-
-.login-input .input-text {
-  @apply w-full;
-}
-
-.remember-me-forgot-password {
-  @apply pt-4;
-  @apply w-full;
-  @apply flex flex-row justify-between items-center;
-}
-
-.remember-me-forgot-password > .check-box > .design {
-  @apply w-4 h-4;
-}
-
-.remember-me-forgot-password > .check-box > .design::before {
-  @apply text-xl leading-4;
-}
-
-.remember-me-forgot-password > .check-box > .text {
-  @apply ml-2;
-  @apply font-semibold;
-}
-
-a.forgot-password {
-  @apply font-semibold;
-}
-
-.login-action {
-  @apply pt-8 md:pt-10;
-  @apply w-full;
-  @apply flex flex-col items-center;
-}
-
-a.btn-login {
-  @apply w-full;
-  @apply flex flex-row justify-center items-center gap-2;
-  @apply px-8 py-3;
-  @apply bg-gold-500 text-white;
-  @apply text-base font-semibold;
-
-  box-shadow: rgba(255, 201, 40, 0.6) 0px 12px 10px -10px;
-}
-
-
-.link-sign-up {
-  @apply pt-4;
-  @apply flex flex-row items-center gap-2;
-  
-}
-
-.link-sign-up p {
-  @apply text-gray-600;
-}
-
-.link-sign-up a {
-  @apply font-semibold;
-}
-
-</style>

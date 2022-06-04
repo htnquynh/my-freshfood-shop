@@ -1,73 +1,70 @@
 <template>
-  <div class="home relative">
-    <TheHeader class="header-page"/>
-    <MiniCart/>
-    <div class="page-content">
-      <div class="login-form-wrapper">
-        <div class="form-title">
-          <h2>Login to Your <span class="text-gold-500">Account!</span></h2>
-          <!-- <hr> -->
+  <div class="py-12 max-w-xs mx-auto space-y-8">
+    <h2 class="text-4xl font-bold text-center">Sign in</h2>
+
+    <div class="space-y-4">
+      <div class="space-y-4">
+        <div class="space-y-2">
+          <label class="block font-medium">Username</label>
+          <input class="w-full px-3 py-2 border border-black focus:outline-none" ref="username-input" type="text"
+            v-model="username">
         </div>
 
-        <div class="login-form">
-          <div class="login-input">
-            <div class="input-text">
-              <label >Username</label>
-              <input ref="username-input" type="text" v-model="username">
-            </div>
-
-            <div class="input-text">
-              <label for="">Password</label>
-              <input ref="password-input" type="password" v-model="password">
-            </div>
-          </div>
-
-          <div class="remember-me-forgot-password">
-            <label class="check-box">
-              <input v-model="check" type="checkbox" value="remember-me" name="remember">
-              <span class="design"></span>
-              <span class="text">Remember me</span>
-            </label>
-            <router-link to='/forgot-password'>
-              <a class="forgot-password">Forgot Password</a>
-            </router-link>
-          </div>
-
-          <div class="login-action">
-            <a ref="btn-login" @click="submitForm()" class="btn-login">
-              <span>Login to Account</span>
-            </a>
-
-            <div class="link-sign-up">
-              <p>Don't have an account?</p>
-              <router-link to="/signup">
-                <a>Sign Up</a>
-              </router-link>
-            </div>
-          </div>
+        <div class="space-y-2">
+          <label class="block font-medium" for="">Password</label>
+          <input class="w-full px-3 py-2 border border-black focus:outline-none" ref="password-input" type="password"
+            v-model="password">
         </div>
       </div>
+
+      <div class="flex justify-between items-center">
+        <label class="check-box">
+          <input v-model="check" type="checkbox" value="remember-me" name="remember">
+          <span class="design"></span>
+          <span class="text">Remember me</span>
+        </label>
+        <router-link to='/forgot-password'>
+          <a class="font-medium">Forgot Password</a>
+        </router-link>
+      </div>
+
+      <div class="pt-4 w-full space-y-4">
+        <a ref="btn-login" @click="submitForm()"
+          class="block text-center w-full px-8 py-3 bg-violet-600 text-white uppercase font-semibold">
+          <span>Login to Account</span>
+        </a>
+
+        <a ref="btn-login-with-google" @click="submitForm()"
+          class="block w-full px-8 py-2 border border-black uppercase font-semibold flex justify-center items-center gap-4 hover:bg-violet-100 transition-colors duration-200 ease-in">
+          <span>Login with Google</span>
+          <span class="h-6 w-1px bg-black"></span>
+          <span>
+            <img class="w-8 h-8 object-contain" src="/assets/images/logo-google.png" alt="">
+          </span>
+        </a>
+
+        <div class="flex justify-center gap-3">
+          <p class="">Don't have an account?</p>
+          <router-link to="/signup">
+            <a class="font-semibold underline">Sign Up</a>
+          </router-link>
+        </div>
+      </div>
+
+      <!-- <div class="pt-3 space-y-3 text-center">
+        <p>Or</p>
+        
+      </div> -->
     </div>
-    <TheSubscribe/>
-    <TheFooter/>
   </div>
 </template>
 
 <script>
-import TheHeader from '../components/TheHeader.vue';
-import TheFooter from '../components/TheFooter.vue';
-import TheSubscribe from '../components/TheSubscribe.vue';
-import MiniCart from '../components/MiniCart.vue';
-
 import { mapActions } from "vuex";
 import UserAPI from "../api/UserAPI";
 
 export default {
   components: {
-    TheHeader,
-    TheFooter,
-    TheSubscribe,
-    MiniCart,
   },
   data() {
     return {
@@ -107,7 +104,7 @@ export default {
         });
     },
     async submitForm() {
-      if(this.username == '') {
+      if (this.username == '') {
         console.log("Username Empty");
         this.$swal.fire(
           'Oops...',
@@ -130,24 +127,23 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-
 .home {
   @apply flex flex-col;
 }
 
-.home > .header-page {
+.home>.header-page {
   @apply w-full;
 }
 
 .page-content {
-  @apply p-0 sm:p-4;
-  @apply bg-white sm:bg-transparent;
+  @apply p-0 sm: p-4;
+  @apply bg-white sm: bg-transparent;
 }
 
 .login-form-wrapper {
   @apply max-w-sm mx-auto;
   @apply bg-white;
-  @apply px-4 sm:px-6 md:px-8 pb-12 pt-8 sm:pt-10;
+  @apply px-4 sm: px-6 md:px-8 pb-12 pt-8 sm:pt-10;
   @apply flex flex-col items-stretch;
 }
 
@@ -184,15 +180,15 @@ export default {
   @apply flex flex-row justify-between items-center;
 }
 
-.remember-me-forgot-password > .check-box > .design {
+.remember-me-forgot-password>.check-box>.design {
   @apply w-4 h-4;
 }
 
-.remember-me-forgot-password > .check-box > .design::before {
+.remember-me-forgot-password>.check-box>.design::before {
   @apply text-xl leading-4;
 }
 
-.remember-me-forgot-password > .check-box > .text {
+.remember-me-forgot-password>.check-box>.text {
   @apply ml-2;
   @apply font-semibold;
 }
@@ -202,7 +198,7 @@ a.forgot-password {
 }
 
 .login-action {
-  @apply pt-8 md:pt-10;
+  @apply pt-8 md: pt-10;
   @apply w-full;
   @apply flex flex-col items-center;
 }
@@ -220,7 +216,7 @@ a.btn-login {
 .link-sign-up {
   @apply pt-4;
   @apply flex flex-row items-center gap-2;
-  
+
 }
 
 .link-sign-up p {
@@ -230,5 +226,4 @@ a.btn-login {
 .link-sign-up a {
   @apply font-semibold;
 }
-
 </style>

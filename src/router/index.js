@@ -26,14 +26,18 @@ const Wishlist = () => import("../views/Wishlist.vue");
 const Compare = () => import("../views/Compare.vue");
 const PageNotFound = () => import("../views/PageNotFound.vue");
 
+const Blogs = () => import("../views/Blogs.vue");
+const Post = () => import("../views/Post.vue");
+
 const routes = [
-  { 
-    path: "/:catchAll(.*)", 
-    redirect: '/404',
+  {
+    path: "/:catchAll(.*)",
+    redirect: "/404",
   },
   {
-    path: '/404',
-    name: "PageNotFound", component: PageNotFound,
+    path: "/404",
+    name: "PageNotFound",
+    component: PageNotFound,
   },
   {
     path: "/",
@@ -171,6 +175,16 @@ const routes = [
       }
     },
   },
+  {
+    path: "/blogs",
+    name: "Blogs",
+    component: Blogs,
+  },
+  {
+    path: "/post",
+    name: "Post",
+    component: Post,
+  },
 ];
 
 const router = createRouter({
@@ -178,7 +192,7 @@ const router = createRouter({
   routes,
   scrollBehavior() {
     // always scroll to top
-    return { top: 0 }
+    return { top: 0 };
   },
 });
 

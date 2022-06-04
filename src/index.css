@@ -1,141 +1,217 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
-@tailwind base;
-
 body {
-  font-family: 'Inter', sans-serif;
-  /* @apply text-secondary; */
-  color: #392A23;
-  /* @apply bg-dominant; */
-  background-color: #FAF9F5;
+  /* font-family: "Quicksand", sans-serif; */
 }
 
 a {
-  @apply cursor-pointer;
+  cursor: pointer;
 }
 
 .input-text {
-  @apply w-full;
-  @apply flex flex-col gap-2;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  gap: 0.5rem;
 }
+
 .input-text label {
-  @apply font-semibold;
+  font-weight: 600;
 }
 
-.input-text input[type='text'],
-.input-text input[type='email'],
-.input-text input[type='password'],
-.input-text input[type='phone'] {
-  /* @apply w-72; */
-  @apply px-4 py-2;
-  @apply rounded-xl;
-  @apply focus:outline-none;
-  /* @apply border; */
+.input-text input[type="text"],
+.input-text input[type="email"],
+.input-text input[type="password"],
+.input-text input[type="phone"] {
+  padding: 0.5rem 1rem;
+  border-radius: 0.75rem;
+  background-color: rgba(250, 249, 245, 1);
+}
 
-  @apply bg-dominant;
+.input-text input[type="text"]:focus,
+.input-text input[type="email"]:focus,
+.input-text input[type="password"]:focus,
+.input-text input[type="phone"]:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
 }
 
 .group-radio-box {
-  @apply w-full;
-  @apply flex flex-col;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  -webkit-flex-direction: column;
+  flex-direction: column;
 }
 
-label.radio-box, 
+label.radio-box,
 label.check-box {
-  @apply flex flex-row items-center;
-  @apply py-1;
-  @apply cursor-pointer;
-  @apply relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+
+  padding: 0.25rem 0;
+  cursor: pointer;
+  position: relative;
 }
 
-label.radio-box input[type='radio'],
-label.check-box input[type='checkbox'] {
+label.radio-box input[type="radio"],
+label.check-box input[type="checkbox"] {
   z-index: -1;
-  @apply opacity-0;
-  @apply absolute inset-0;
+  opacity: 0;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
 }
 
 label.radio-box input[type="radio"]:disabled ~ .text,
 label.radio-box input[type="radio"]:disabled + .design,
-label.check-box input[type='checkbox']:disabled ~ .text,
-label.check-box input[type='checkbox']:disabled + .design {
-  @apply opacity-40;
+label.check-box input[type="checkbox"]:disabled ~ .text,
+label.check-box input[type="checkbox"]:disabled + .design {
+  opacity: 0.4;
 }
 
 label.radio-box .design {
-  @apply w-5 h-5;
-  @apply rounded-full;
-  @apply relative;
-  @apply box-border border border-secondary;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 50%;
+  position: relative;
+
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+
+  border: 1px solid rgba(57, 42, 35, 1);
   transition: 0.3s;
 }
 
 label.check-box .design {
-  @apply w-5 h-5;
-  @apply relative;
-  @apply box-border border border-secondary;
+  width: 1.25rem;
+  height: 1.25rem;
+  position: relative;
+
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+
+  border: 1px solid rgba(57, 42, 35, 1);
   transition: 0.3s;
 }
 
 label.radio-box .design::before {
-  @apply font-serif;
-  content: '✔';
-  @apply text-2xl leading-5;
-  @apply w-min;
-  @apply block;
-  @apply absolute -top-1 left-0.5;
-  @apply opacity-0;
+  font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  content: "✔";
+
+  font-size: 1.5rem; /* 24px */
+  line-height: 1.25rem;
+
+  width: -webkit-min-content;
+  width: -moz-min-content;
+  width: min-content;
+
+  display: block;
+  position: absolute;
+  top: -0.25rem;
+  left: 0.125rem;
+  opacity: 0;
 }
 
 label.check-box .design::before {
-  @apply font-serif;
-  content: '✔';
-  @apply text-2xl leading-5;
-  @apply w-min;
-  @apply block;
-  @apply absolute -top-1 left-0.5;
-  @apply opacity-0;
+  font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  content: "✔";
+
+  font-size: 1.5rem; /* 24px */
+  line-height: 1.25rem;
+
+  width: -webkit-min-content;
+  width: -moz-min-content;
+  width: min-content;
+
+  display: block;
+  position: absolute;
+  top: -0.25rem;
+  left: 0.125rem;
+  opacity: 0;
 }
 
 label.radio-box .text,
 label.check-box .text {
-  @apply ml-4;
+  margin-left: 1rem;
   transition: 0.3s;
 }
 
-label.radio-box input[type='radio']:checked + .design::before,
-label.check-box input[type='checkbox']:checked + .design::before {
+label.radio-box input[type="radio"]:checked + .design::before,
+label.check-box input[type="checkbox"]:checked + .design::before {
   opacity: 1;
 }
 
-label.radio-box input[type='radio']:not([disabled]):hover + .design,
-label.radio-box input[type='radio']:not([disabled]):focus + .design,
-label.check-box input[type='checkbox']:not([disabled]):hover + .design,
-label.check-box input[type='checkbox']:not([disabled]):focus + .design {
-  @apply border border-gold-500;
-  @apply text-gold-500;
+label.radio-box input[type="radio"]:not([disabled]):hover + .design,
+label.radio-box input[type="radio"]:not([disabled]):focus + .design,
+label.check-box input[type="checkbox"]:not([disabled]):hover + .design,
+label.check-box input[type="checkbox"]:not([disabled]):focus + .design {
+  border: 1px solid rgba(255, 201, 40, 1);
+  color: rgba(255, 201, 40, 1);
 }
 
-label.radio-box input[type='radio']:not([disabled]):hover ~ .text,
-label.check-box input[type='checkbox']:not([disabled]):hover ~ .text {
-  @apply text-gold-500;
+label.radio-box input[type="radio"]:not([disabled]):hover ~ .text,
+label.check-box input[type="checkbox"]:not([disabled]):hover ~ .text {
+  color: rgba(255, 201, 40, 1);
 }
-
 
 .input-opt {
-  @apply flex flex-row justify-center gap-2;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+
+  gap: 0.5rem;
 }
 
-.input-opt input[type='text'] {
-  @apply w-12 h-12;
-  @apply text-center font-bold text-xl;
-  @apply p-2;
-  @apply focus:outline-none;
-  @apply rounded-xl;
-  @apply border;
+.input-opt input[type="text"] {
+  width: 3rem;
+  height: 3rem;
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  padding: 0.5rem;
+  border-radius: 0.75rem;
+  border: 1px solid black;
 }
 
-@tailwind components;
-@tailwind utilities;
-
+.input-opt input[type="text"]:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
