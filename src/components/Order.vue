@@ -84,14 +84,6 @@ export default {
   },
   methods: {
     ...mapActions(["getOrders", "start_load", "stop_load"]),
-    imageProduct(name) {
-      try {
-        let img = "/products/" + name;
-        return img;
-      } catch (error) {
-        console.log(error);
-      }
-    },
     async updateOrderStatus(status) {
       this.start_load();
       let token = JSON.parse(sessionStorage.getItem("user_login"));

@@ -4,7 +4,7 @@
 
       <div class="product-col">
         <div class="product-image">
-          <img :src="imageProduct(selectedGroup.image)" />
+          <img :src="selectedGroup.image" />
         </div>
       </div>
 
@@ -149,9 +149,6 @@ export default {
   },
   methods: {
     ...mapActions(["getGroups", "getUserCart", "start_load", "stop_load"]),
-    imageProduct(name) {
-      return "https://shopfreshapi.herokuapp.com/group/" + name;
-    },
     checkQuantity() {
       for (const item of this.selectedGroup.material) {
         console.log(item.product.quantity_remaining);

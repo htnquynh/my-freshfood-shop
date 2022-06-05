@@ -1,7 +1,7 @@
 <template>
   <div class="group-item-wrapper">
     <div class="group-item">
-      <img class="group-item-image"  :src="imageProduct(item.product.image)" >
+      <img class="group-item-image"  :src="item.product.image" >
       <div class="group-item-spec">
         <div class="product-spec">
           <p class="product-category">{{ item.product.category }}</p>
@@ -110,14 +110,6 @@ export default {
   },
   methods: {
     ...mapActions(["addItemToCart", "removeByProductId", "getSelectedProduct", "start_load", "stop_load"]),
-    imageProduct(name) {
-        try {
-            let img = "https://shopfreshapi.herokuapp.com/products/" + name;
-            return img;
-        } catch (error) {
-            console.log(error);
-        }
-    },
     updateQuantity() {
       if (this.new_quantity < 1 ) {
           this.new_quantity = this.item.quantity;

@@ -3,7 +3,7 @@
     <div class="flex gap-16">
 
       <div class="w-5/12 aspect-square bg-fuchsia-50">
-        <img class="object-contain" :src="imageProduct(selectedProduct.image)" alt="Image" />
+        <img class="object-contain" :src="selectedProduct.image" alt="Image" />
       </div>
 
       <div class="w-7/12">
@@ -174,9 +174,6 @@ export default {
         "stop_load",
       ]
     ),
-    imageProduct(name) {
-      return "https://shopfreshapi.herokuapp.com/products/" + name;
-    },
     minusQuantity() {
       if (this.quantity > 1) {
         this.quantity--;

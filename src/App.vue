@@ -5,25 +5,48 @@
 
     <router-view />
 
-
     <GlobalSubscribe />
     <GlobalFooter />
 
     <LoadScreen :isLoading="isLoading" />
-    <button class="fixed bottom-8 right-24 rounded-full bg-gold-500 p-2 z-20" id="backToTop" @click="backToTop()">
-      <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24"
-        width="24px" fill="#000000">
+    <button
+      class="fixed bottom-8 right-24 rounded-full bg-gold-500 p-2 z-20"
+      id="backToTop"
+      @click="backToTop()"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        enable-background="new 0 0 24 24"
+        height="24px"
+        viewBox="0 0 24 24"
+        width="24px"
+        fill="#000000"
+      >
         <rect fill="none" height="24" width="24" />
         <path d="M5,9l1.41,1.41L11,5.83V22H13V5.83l4.59,4.59L19,9l-7-7L5,9z" />
       </svg>
     </button>
-    <beautiful-chat :participants="participants" :onMessageWasSent="onMessageWasSent" :messageList="messageList"
-      :newMessagesCount="newMessagesCount" :isOpen="isChatOpen" :close="closeChat" :open="openChat" :showLauncher="true"
-      :showCloseButton="true" :colors="colors" :alwaysScrollToBottom="alwaysScrollToBottom"
-      :disableUserListToggle="true" :messageStyling="messageStyling">
+    <beautiful-chat
+      :participants="participants"
+      :onMessageWasSent="onMessageWasSent"
+      :messageList="messageList"
+      :newMessagesCount="newMessagesCount"
+      :isOpen="isChatOpen"
+      :close="closeChat"
+      :open="openChat"
+      :showLauncher="true"
+      :showCloseButton="true"
+      :colors="colors"
+      :alwaysScrollToBottom="alwaysScrollToBottom"
+      :disableUserListToggle="true"
+      :messageStyling="messageStyling"
+    >
       <template v-slot:header>
-        <img style="border-radius: 50%" width="50"
-          src="https://png.pngtree.com/png-vector/20191027/ourlarge/pngtree-fresh-logo-of-green-leaf-ecology-vector-collection-of-bright-and-png-image_1862265.jpg" />
+        <img
+          style="border-radius: 50%"
+          width="50"
+          src="https://png.pngtree.com/png-vector/20191027/ourlarge/pngtree-fresh-logo-of-green-leaf-ecology-vector-collection-of-bright-and-png-image_1862265.jpg"
+        />
         <h3 style="line-height: 50px; margin-left: 10px">
           Welcome to Fresh Shop
         </h3>
@@ -182,5 +205,4 @@ export default {
   },
 };
 </script>
-<style scoped>
-</style>
+<style scoped></style>

@@ -2,7 +2,7 @@
 
   <div class="px-4 py-4 bg-white">
     <div class="aspect-square flex items-center">
-      <img class="" :src="imageProduct(product.image)" alt="Product image" @click="detailProduct()" />
+      <img class="" :src="product.image" alt="Product image" @click="detailProduct()" />
     </div>
 
     <div class="space-y-4">
@@ -86,16 +86,6 @@ export default {
       "addItemsToWishlist",
       "getWishlist",
     ]),
-
-    imageProduct(name) {
-      try {
-        let img = "https://shopfreshapi.herokuapp.com/products/" + name;
-        return img;
-      } catch (error) {
-        console.log(error);
-      }
-    },
-
     detailProduct() {
       this.getSelectedProduct(this.product._id);
       const id = this.product._id;

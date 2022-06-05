@@ -31,7 +31,7 @@
           <tr v-for="item in compareProducts" :key="item._id" class="row-product">
             <td class="td-table">
               <div class="col-product">
-                <img class="group-item-image" :src="imageProduct(item.image)">
+                <img class="group-item-image" :src="item.image">
                 <div class="product-spec">
                   <p class="product-category">{{ item.category }}</p>
                   <p class="product-name">{{ item.name }}</p>
@@ -118,14 +118,6 @@ export default {
   },
   methods: {
     ...mapActions(["deleteCompareProduct", "getUserCart", "start_load", "stop_load"]),
-    imageProduct(name) {
-      try {
-        let img = "/products/" + name;
-        return img;
-      } catch (error) {
-        console.log(error);
-      }
-    },
     async addItemToCart(product) {
       if (this.is_login) {
         this.start_load();

@@ -1,7 +1,7 @@
 <template>
   <div class="flex-shrink-0 flex gap-2 w-56 h-16 bg-white px-2 py-3">
     <div class="aspect-square w-16 flex items-center">
-      <img class="object-contain" :src="imageProduct(product.image)" alt="Image" />
+      <img class="object-contain" :src="product.image" alt="Image" />
     </div>
 
     <div class="flex-1 flex gap-2 items-start">
@@ -61,14 +61,6 @@ export default {
   },
   methods: {
     ...mapActions(["getUserCart", "addItemToWishlist", "addItemsToWishlist", "start_load", "stop_load"]),
-    imageProduct(name) {
-      try {
-        let img = "https://shopfreshapi.herokuapp.com/products/" + name;
-        return img;
-      } catch (error) {
-        console.log(error);
-      }
-    },
     async addItemToCart() {
       if (this.is_login) {
         this.start_load();

@@ -73,22 +73,22 @@
 
         <div class="input-text">
           <label for="">Fullname</label>
-          <input type="text" v-model="full_name" />
+          <input type="text" v-model="user.full_name" />
         </div>
 
         <div class="input-text">
           <label for="">Address</label>
-          <input type="text" v-model="address" />
+          <input type="text" v-model="user.address" />
         </div>
 
         <div class="input-text">
           <label for="">Phone</label>
-          <input type="text" v-model="phone" />
+          <input type="text" v-model="user.phone" />
         </div>
 
         <div class="input-text">
           <label for="">Birthdate</label>
-          <input type="text" v-model="birthdate" />
+          <input type="text" v-model="user.birthdate" />
         </div>
 
         <a class="btn-update-info" @click="changeInfo()">Update Info</a>
@@ -100,17 +100,20 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import UserAPI from "../api/UserAPI";
+import uploadFileToCloudinary from "../composables/useUploadImage";
 
 export default {
   components: {},
   data() {
     return {
       previewImage: "",
-      new_avatar: "",
-      full_name: "",
-      address: "",
-      phone: "",
-      birthdate: "",
+      user: {
+        avatar: "",
+        full_name: "",
+        address: "",
+        phone: "",
+        birthdate: "",
+      },
     };
   },
   created() {
@@ -128,7 +131,7 @@ export default {
   methods: {
     ...mapActions(["setUser", "start_load", "stop_load"]),
     getImg() {
-      this.previewImage = `https://shopfreshapi.herokuapp.com/avatar/${this.userLogin.avatar}`;
+      this.previewImage = this.userLogin.avatar;
     },
     pickFile() {
       let input = this.$refs.fileInput;
@@ -147,35 +150,32 @@ export default {
     },
     async changeInfo() {
       this.start_load();
-      console.log("Change Profile");
-      const formData = new FormData();
-      formData.append("full_name", this.full_name);
-      formData.append("address", this.address);
-      formData.append("phone", this.phone);
-      formData.append("birthdate", this.birthdate);
-      formData.append("old_avatar", this.userLogin.avatar);
-      formData.append("avatar", this.new_avatar);
 
-      await UserAPI.update(this.userLogin._id, formData)
-        .then((res) => {
-          this.setUser(res.data.userUpdated).then(() => {
-            this.stop_load();
-            this.$swal.fire(
-              "Success!",
-              "You have successfully updated your information",
-              "success"
-            );
-          });
-        })
-        .catch((err) => {
-          this.stop_load();
-          this.$swal.fire(
-            "Uh oh!",
-            "Something went wrong. Double check your work.",
-            "error"
-          );
-          console.log(err.message);
-        });
+      await uploadFileToCloudinary(this.user.avatar, "avatars").then(
+        (fileResponse) => {
+          this.user.avatar = fileResponse.url;
+          UserAPI.update(this.userLogin._id, this.user)
+            .then((res) => {
+              this.setUser(res.data.userUpdated).then(() => {
+                this.stop_load();
+                this.$swal.fire(
+                  "Success!",
+                  "You have successfully updated your information",
+                  "success"
+                );
+              });
+            })
+            .catch((err) => {
+              this.stop_load();
+              this.$swal.fire(
+                "Uh oh!",
+                "Something went wrong. Double check your work.",
+                "error"
+              );
+              console.log(err.message);
+            });
+        }
+      );
     },
   },
 };

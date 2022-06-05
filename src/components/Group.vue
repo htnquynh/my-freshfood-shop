@@ -2,7 +2,7 @@
   <div class="w-full">
     <div class="">
       <div class="aspect-16/24">
-        <img class="object-cover" :src="imageGroup(group.image)" @click="detailGroup()" alt="Image">
+        <img class="object-cover" :src="group.image" @click="detailGroup()" alt="Image">
       </div>
 
       <div class="px-6 py-4 space-y-3 w-full bg-fuchsia-50">
@@ -59,14 +59,6 @@ export default {
   },
   methods: {
     ...mapActions(["setSelectedGroup",]),
-    imageGroup(name) {
-      try {
-        let img = "https://shopfreshapi.herokuapp.com/group/" + name;
-        return img;
-      } catch (error) {
-        console.log(error);
-      }
-    },
     detailGroup() {
       this.setSelectedGroup(this.group._id);
       const id = this.group._id;

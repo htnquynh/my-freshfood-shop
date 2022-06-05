@@ -193,19 +193,7 @@ export default {
           this.stop_load();
           return;
         }
-        const formData = new FormData();
-        formData.append("username", this.user.username);
-        formData.append("password", this.user.password);
-        formData.append("full_name", this.user.full_name);
-        formData.append("email", this.user.email);
-        formData.append("position", this.user.position);
-        formData.append("birthdate", this.user.birthdate);
-        formData.append("address", this.user.address);
-        formData.append("phone", this.user.phone);
-        formData.append("avatar", this.user.avatar);
-        formData.append("status", this.user.status);
-
-        await UserAPI.signup(formData).then((res) => {
+        await UserAPI.signup(this.user).then((res) => {
           this.stop_load();
           this.$router.push({ name: "VerifyUser" });
           console.log(res.data.message);

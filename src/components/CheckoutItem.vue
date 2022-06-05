@@ -1,7 +1,7 @@
 <template>
   <div class="group-item-wrapper">
     <div class="group-item">
-      <img class="group-item-image" :src="imageProduct(item.product.image)" >
+      <img class="group-item-image" :src="item.product.image" >
       <div class="group-item-spec">
         <div class="product-spec">
           <p class="product-category">{{ item.product.category }}</p>
@@ -34,14 +34,6 @@ export default {
     },
   },
   methods: {
-    imageProduct(name) {
-      try {
-        let img = "https://shopfreshapi.herokuapp.com/products/" + name;
-        return img;
-      } catch (error) {
-        console.log(error);
-      }
-    },
   },
 }
 </script>

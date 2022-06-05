@@ -6,40 +6,63 @@
       <div class="space-y-4">
         <div class="space-y-2">
           <label class="block font-medium">Username</label>
-          <input class="w-full px-3 py-2 border border-black focus:outline-none" ref="username-input" type="text"
-            v-model="username">
+          <input
+            class="w-full px-3 py-2 border border-black focus:outline-none"
+            ref="username-input"
+            type="text"
+            v-model="username"
+          />
         </div>
 
         <div class="space-y-2">
           <label class="block font-medium" for="">Password</label>
-          <input class="w-full px-3 py-2 border border-black focus:outline-none" ref="password-input" type="password"
-            v-model="password">
+          <input
+            class="w-full px-3 py-2 border border-black focus:outline-none"
+            ref="password-input"
+            type="password"
+            v-model="password"
+          />
         </div>
       </div>
 
       <div class="flex justify-between items-center">
         <label class="check-box">
-          <input v-model="check" type="checkbox" value="remember-me" name="remember">
+          <input
+            v-model="check"
+            type="checkbox"
+            value="remember-me"
+            name="remember"
+          />
           <span class="design"></span>
           <span class="text">Remember me</span>
         </label>
-        <router-link to='/forgot-password'>
+        <router-link to="/forgot-password">
           <a class="font-medium">Forgot Password</a>
         </router-link>
       </div>
 
       <div class="pt-4 w-full space-y-4">
-        <a ref="btn-login" @click="submitForm()"
-          class="block text-center w-full px-8 py-3 bg-violet-600 text-white uppercase font-semibold">
+        <a
+          ref="btn-login"
+          @click="submitForm()"
+          class="block text-center w-full px-8 py-3 bg-violet-600 text-white uppercase font-semibold"
+        >
           <span>Login to Account</span>
         </a>
 
-        <a ref="btn-login-with-google" @click="submitForm()"
-          class="block w-full px-8 py-2 border border-black uppercase font-semibold flex justify-center items-center gap-4 hover:bg-violet-100 transition-colors duration-200 ease-in">
+        <a
+          ref="btn-login-with-google"
+          @click="googleSignIn()"
+          class="block w-full px-8 py-2 border border-black uppercase font-semibold flex justify-center items-center gap-4 hover:bg-violet-100 transition-colors duration-200 ease-in"
+        >
           <span>Login with Google</span>
           <span class="h-6 w-1px bg-black"></span>
           <span>
-            <img class="w-8 h-8 object-contain" src="/assets/images/logo-google.png" alt="">
+            <img
+              class="w-8 h-8 object-contain"
+              src="/assets/images/logo-google.png"
+              alt=""
+            />
           </span>
         </a>
 
@@ -62,19 +85,25 @@
 <script>
 import { mapActions } from "vuex";
 import UserAPI from "../api/UserAPI";
+import * as firebase from "firebase";
 
 export default {
-  components: {
-  },
+  components: {},
   data() {
     return {
-      check: ['remember-me'],
+      check: ["remember-me"],
       username: "",
       password: "",
     };
   },
   methods: {
-    ...mapActions(["getUserCart", "getWishlist", "setUser", "start_load", "stop_load"]),
+    ...mapActions([
+      "getUserCart",
+      "getWishlist",
+      "setUser",
+      "start_load",
+      "stop_load",
+    ]),
     async login(username, password) {
       this.start_load();
       await UserAPI.login(username, password)
@@ -87,40 +116,71 @@ export default {
             this.stop_load();
             this.$router.push("/");
             this.$swal.fire(
-              'Welcome!',
-              'You have successfully logged in.',
-              'success'
+              "Welcome!",
+              "You have successfully logged in.",
+              "success"
             );
           });
         })
         .catch((err) => {
           console.log(err.message);
           this.stop_load();
-          this.$swal.fire(
-            'Uh oh!',
-            'You have failed to login.',
-            'error'
-          );
+          this.$swal.fire("Uh oh!", "You have failed to login.", "error");
         });
     },
     async submitForm() {
-      if (this.username == '') {
+      if (this.username == "") {
         console.log("Username Empty");
-        this.$swal.fire(
-          'Oops...',
-          'Please enter your Username!',
-          'error'
-        );
-      } else if (this.password == '') {
+        this.$swal.fire("Oops...", "Please enter your Username!", "error");
+      } else if (this.password == "") {
         console.log("Password Empty");
-        this.$swal.fire(
-          'Oops...',
-          'Please enter your Password!',
-          'error'
-        );
+        this.$swal.fire("Oops...", "Please enter your Password!", "error");
       } else {
         this.login(this.username, this.password);
       }
+    },
+    async googleSignIn() {
+      let provider = new firebase.auth.GoogleAuthProvider();
+      firebase
+        .auth()
+        .signInWithPopup(provider)
+        .then((result) => {
+          this.start_load();
+          //let token = result.credential.accessToken;
+          let user = result.user;
+          const { email, phoneNumber, photoURL, displayName } =
+            user.providerData[0];
+          this.user.username = Math.random().toString(36);
+          this.user.password = Math.random().toString(36);
+          this.user.email = email;
+          this.user.phone = phoneNumber || "";
+          this.user.avatar = photoURL;
+          this.user.full_name = displayName;
+          UserAPI.login_with_google(this.user)
+            .then((res) => {
+              let user_login = JSON.stringify(res.data.accessToken);
+              sessionStorage.setItem("user_login", user_login);
+              this.setUser(res.data.user).then(() => {
+                this.getUserCart();
+                this.getWishlist();
+                this.stop_load();
+                this.$router.push("/");
+                this.$swal.fire(
+                  "Welcome!",
+                  "You have successfully logged in.",
+                  "success"
+                );
+              });
+            })
+            .catch((err) => {
+              console.log(err.message);
+              this.stop_load();
+              this.$swal.fire("Uh oh!", "You have failed to login.", "error");
+            });
+        })
+        .catch((err) => {
+          console.log(err); // This will give you all the information needed to further debug any errors
+        });
     },
   },
 };
@@ -131,7 +191,7 @@ export default {
   @apply flex flex-col;
 }
 
-.home>.header-page {
+.home > .header-page {
   @apply w-full;
 }
 
@@ -180,15 +240,15 @@ export default {
   @apply flex flex-row justify-between items-center;
 }
 
-.remember-me-forgot-password>.check-box>.design {
+.remember-me-forgot-password > .check-box > .design {
   @apply w-4 h-4;
 }
 
-.remember-me-forgot-password>.check-box>.design::before {
+.remember-me-forgot-password > .check-box > .design::before {
   @apply text-xl leading-4;
 }
 
-.remember-me-forgot-password>.check-box>.text {
+.remember-me-forgot-password > .check-box > .text {
   @apply ml-2;
   @apply font-semibold;
 }
@@ -216,7 +276,6 @@ a.btn-login {
 .link-sign-up {
   @apply pt-4;
   @apply flex flex-row items-center gap-2;
-
 }
 
 .link-sign-up p {

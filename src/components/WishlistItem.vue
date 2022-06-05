@@ -2,7 +2,7 @@
   <div class="group-item-wrapper">
     <div class="group-item">
       <img class="group-item-image"
-        :src="imageProduct(product.image)" >
+        :src="product.image" >
       <div class="group-item-spec">
         <div class="product-spec">
           <p class="product-category">{{ product.category }}</p>
@@ -81,14 +81,6 @@ export default {
   },
   methods: {
     ...mapActions(["getUserCart", "deleteWishlistItem", "addItemsToWishlist", "start_load", "stop_load"]),
-    imageProduct(name) {
-      try {
-          let img = "https://shopfreshapi.herokuapp.com/products/" + name;
-          return img;
-      } catch (error) {
-          console.log(error);
-      }
-    },
     async deleteItem(product_id) {
       this.start_load();
       await this.deleteWishlistItem(product_id)

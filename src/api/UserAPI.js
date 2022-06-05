@@ -4,6 +4,9 @@ export default {
   login(username, password) {
     return api.post(`${endpoint}/login`, { username, password });
   },
+  login_with_google(user) {
+    return api.post(`${endpoint}/login-with-google`, user);
+  },
   signup(data) {
     return api.post(`${endpoint}/create`, data);
   },
