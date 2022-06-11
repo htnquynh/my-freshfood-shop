@@ -68,7 +68,7 @@
           </router-link>
         </div>
         <div class="">
-          <swiper :modules="modules" :loop="true" :autoplay="{
+          <swiper :modules="modules" :loop="best_seller.length >= 5 ? true : false" :autoplay="{
             delay: 2500,
             disableOnInteraction: false,
           }" :slides-per-view="5" :space-between="24" navigation :pagination="{ clickable: true }" class="!pb-16">
@@ -97,7 +97,7 @@
           </router-link>
         </div>
         <div class="">
-          <swiper :modules="modules" :loop="true" :autoplay="{
+          <swiper :modules="modules" :loop="new_arrival.length >= 5 ? true : false" :autoplay="{
             delay: 2500,
             disableOnInteraction: false,
           }" :slides-per-view="5" :space-between="24" navigation :pagination="{ clickable: true }" class="!pb-16">
@@ -126,7 +126,7 @@
           </router-link>
         </div>
         <div class="">
-          <swiper :modules="modules" :loop="true" :autoplay="{
+          <swiper :modules="modules" :loop="groups.length >= 3 ? true : false" :autoplay="{
             delay: 2500,
             disableOnInteraction: false,
           }" :slides-per-view="3" :space-between="32" navigation :pagination="{ clickable: true }" class="!pb-16">
@@ -181,9 +181,14 @@ export default {
     this.start_load();
     this.getProducts().then((res) => {
       console.log(res);
-      this.featured = this.products.slice(0, 10);
-      this.best_seller = this.sortProductBySold(this.products).slice(0, 10);
-      this.new_arrival = this.featured.slice(0, 5);
+      if (this.products.length > 0) {
+        this.featured = this.products.length > 10 ? this.products.slice(0, 10) : this.products;
+        console.log(this.featured)
+        this.best_seller = this.products.length > 10 ? this.sortProductBySold(this.products).slice(0, 10) : this.products;
+        console.log(this.best_seller)
+        this.new_arrival = this.products.length > 5 ? this.featured.slice(0, 5) : this.products;
+        console.log(this.new_arrival)
+      }
       this.getGroups().then(() => {
         this.stop_load();
       });

@@ -3,53 +3,25 @@
     <div class="account-summary-wrapper account-col">
       <div class="account-summary">
         <div class="my-avatar">
-          <img
-            v-if="new_avatar"
-            :src="previewImage"
-            alt="Account Image Placeholder"
-            class="image-placeholder"
-          />
-          <img
-            v-else-if="userLogin.avatar"
-            :src="previewImage"
-            alt="Account Image Placeholder"
-            class="image-placeholder"
-          />
-          <img
-            v-else
-            src="../assets/image/avatar-placeholder.png"
-            alt="Account Image Placeholder"
-            class="image-placeholder"
-          />
+          <img v-if="userLogin.avatar || new_avatar" :src="previewImage" alt="Account Image Placeholder"
+            class="image-placeholder" />
+          <img v-else src="../assets/image/avatar-placeholder.png" alt="Account Image Placeholder"
+            class="image-placeholder" />
 
           <label class="input-avatar">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              enable-background="new 0 0 24 24"
-              height="24px"
-              viewBox="0 0 24 24"
-              width="24px"
-              fill="currentColor"
-            >
+            <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24"
+              width="24px" fill="currentColor">
               <g>
                 <rect fill="none" height="24" width="24" />
               </g>
               <g>
                 <path
-                  d="M18,15v3H6v-3H4v3c0,1.1,0.9,2,2,2h12c1.1,0,2-0.9,2-2v-3H18z M7,9l1.41,1.41L11,7.83V16h2V7.83l2.59,2.58L17,9l-5-5L7,9z"
-                />
+                  d="M18,15v3H6v-3H4v3c0,1.1,0.9,2,2,2h12c1.1,0,2-0.9,2-2v-3H18z M7,9l1.41,1.41L11,7.83V16h2V7.83l2.59,2.58L17,9l-5-5L7,9z" />
               </g>
             </svg>
 
-            <input
-              type="file"
-              name="avatar"
-              accept="image/*"
-              ref="fileInput"
-              id="account-image-upload"
-              @input="pickFile"
-              @change="selectFile"
-            />
+            <input type="file" name="avatar" accept="image/*" ref="fileInput" id="account-image-upload"
+              @input="pickFile" @change="selectFile" />
             <span class="text">Upload your avatar</span>
           </label>
         </div>
@@ -68,30 +40,39 @@
     </div>
 
     <div class="my-account account-col">
-      <div class="account-info">
-        <h3 class="account-title">My Information</h3>
+      <div class="w-full space-y-4">
+        <h3 class="text-lg font-semibold">My Information</h3>
 
-        <div class="input-text">
-          <label for="">Fullname</label>
-          <input type="text" v-model="user.full_name" />
+        <div class="space-y-2">
+          <label class="block font-medium">Fullname</label>
+          <input
+            class="w-full px-3 py-2 border border-black focus:outline-none focus:border-violet-500 focus:ring-3 focus:ring-violet-200 transition-all duration-200 ease-in"
+            type="text" v-model="user.full_name" />
         </div>
 
-        <div class="input-text">
-          <label for="">Address</label>
-          <input type="text" v-model="user.address" />
+        <div class="space-y-2">
+          <label class="block font-medium">Address</label>
+          <input
+            class="w-full px-3 py-2 border border-black focus:outline-none focus:border-violet-500 focus:ring-3 focus:ring-violet-200 transition-all duration-200 ease-in"
+            type="text" v-model="user.address" />
         </div>
 
-        <div class="input-text">
-          <label for="">Phone</label>
-          <input type="text" v-model="user.phone" />
+        <div class="space-y-2">
+          <label class="block font-medium">Phone</label>
+          <input
+            class="w-full px-3 py-2 border border-black focus:outline-none focus:border-violet-500 focus:ring-3 focus:ring-violet-200 transition-all duration-200 ease-in"
+            type="text" v-model="user.phone" />
         </div>
 
-        <div class="input-text">
-          <label for="">Birthdate</label>
-          <input type="text" v-model="user.birthdate" />
+        <div class="space-y-2">
+          <label class="block font-medium">Birthdate</label>
+          <input
+            class="w-full px-3 py-2 border border-black focus:outline-none focus:border-violet-500 focus:ring-3 focus:ring-violet-200 transition-all duration-200 ease-in"
+            type="text" v-model="user.birthdate" />
         </div>
 
-        <a class="btn-update-info" @click="changeInfo()">Update Info</a>
+        <button class="px-6 py-3 w-full bg-violet-600 text-white font-semibold" @click="changeInfo()">Update
+          Info</button>
       </div>
     </div>
   </div>
@@ -101,6 +82,7 @@
 import { mapGetters, mapActions } from "vuex";
 import UserAPI from "../api/UserAPI";
 import uploadFileToCloudinary from "../composables/useUploadImage";
+// import { mapGetters, mapActions } from '../store/mapState';
 
 export default {
   components: {},
@@ -114,19 +96,22 @@ export default {
         phone: "",
         birthdate: "",
       },
+      new_avatar: "",
     };
   },
   created() {
     this.start_load();
+    console.log(this.userLogin);
+    this.user.full_name = this.userLogin.full_name;
+    this.user.address = this.userLogin.address;
+    this.user.phone = this.userLogin.phone;
+    this.user.birthdate = this.userLogin.birthdate;
+    this.user.avatar = this.userLogin.avatar;
     this.getImg();
-    this.full_name = this.userLogin.full_name;
-    this.address = this.userLogin.address;
-    this.phone = this.userLogin.phone;
-    this.birthdate = this.userLogin.birthdate;
     this.stop_load();
   },
   computed: {
-    ...mapGetters(["userLogin"]),
+    ...mapGetters(['userLogin']),
   },
   methods: {
     ...mapActions(["setUser", "start_load", "stop_load"]),
@@ -151,31 +136,32 @@ export default {
     async changeInfo() {
       this.start_load();
 
-      await uploadFileToCloudinary(this.user.avatar, "avatars").then(
-        (fileResponse) => {
-          this.user.avatar = fileResponse.url;
-          UserAPI.update(this.userLogin._id, this.user)
-            .then((res) => {
-              this.setUser(res.data.userUpdated).then(() => {
-                this.stop_load();
-                this.$swal.fire(
-                  "Success!",
-                  "You have successfully updated your information",
-                  "success"
-                );
-              });
-            })
-            .catch((err) => {
-              this.stop_load();
-              this.$swal.fire(
-                "Uh oh!",
-                "Something went wrong. Double check your work.",
-                "error"
-              );
-              console.log(err.message);
-            });
-        }
-      );
+      if (this.new_avatar) {
+        const fileResponse = await uploadFileToCloudinary(this.new_avatar, "avatars");
+        this.user.avatar = fileResponse.url;
+      }
+
+      await UserAPI.update(this.userLogin._id, this.user)
+        .then((res) => {
+          this.setUser(res.data.userUpdated).then(() => {
+            console.log("Set new user: ", res.data.userUpdated);
+            this.stop_load();
+            this.$swal.fire(
+              "Success!",
+              "You have successfully updated your information",
+              "success"
+            );
+          });
+        })
+        .catch((err) => {
+          this.stop_load();
+          this.$swal.fire(
+            "Uh oh!",
+            "Something went wrong. Double check your work.",
+            "error"
+          );
+          console.log(err.message);
+        });
     },
   },
 };
@@ -184,8 +170,8 @@ export default {
 <style lang="postcss" scoped>
 .my-account-wrapper {
   @apply w-full max-w-full;
-  @apply grid grid-cols-1 place-items-center sm:grid-cols-2 sm:place-items-start;
-  @apply p-3 sm:py-2 md:px-2 lg:px-4;
+  @apply grid grid-cols-1 place-items-center sm: grid-cols-2 sm:place-items-start;
+  @apply p-3 sm: py-2 md:px-2 lg:px-4;
 }
 
 .account-col {
@@ -207,9 +193,9 @@ export default {
 }
 
 .my-avatar img {
-  @apply p-1  sm:p-2 lg:p-4;
+  @apply p-1 sm: p-2 lg:p-4;
   @apply bg-white;
-  @apply w-40 h-40 sm:w-44 sm:h-44 md:w-48 md:h-48 lg:w-56 lg:h-56;
+  @apply w-40 h-40 sm: w-44 sm:h-44 md:w-48 md:h-48 lg:w-56 lg:h-56;
   @apply object-contain;
   @apply rounded-full;
 }
@@ -259,7 +245,7 @@ export default {
 
 .my-account {
   @apply w-full;
-  @apply p-4 sm:py-0;
+  @apply p-4 sm: py-0;
   @apply flex flex-col items-center gap-8;
 }
 

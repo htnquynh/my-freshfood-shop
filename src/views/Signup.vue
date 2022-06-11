@@ -119,16 +119,10 @@ export default {
   methods: {
     ...mapActions(["start_load", "stop_load"]),
     enableSubmit() {
-      if (
-        this.email_valid &&
+      return !!(this.email_valid &&
         this.username_valid &&
         this.password_valid &&
-        this.confirm_valid
-      ) {
-        return true;
-      } else {
-        return false;
-      }
+        this.confirm_valid);
     },
     checkEmail() {
       var reg = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
@@ -179,20 +173,24 @@ export default {
     async signup() {
       if (this.enableSubmit) {
         this.start_load();
-        if (this.checkEmailExist(this.user.email)) {
+        const isEmailExist = await this.checkEmailExist(this.user.email);
+        if (isEmailExist) {
           this.email_valid = false;
           this.email_error = "Email already exists!";
           this.enableSubmit();
           this.stop_load();
           return;
         }
-        if (this.checkUsernameExist(this.user.username)) {
+
+        const isUsernameExist = await this.checkUsernameExist(this.user.username);
+        if (isUsernameExist) {
           this.username_valid = false;
           this.username_error = "Username already exists!";
           this.enableSubmit();
           this.stop_load();
           return;
         }
+
         await UserAPI.signup(this.user).then((res) => {
           this.stop_load();
           this.$router.push({ name: "VerifyUser" });
@@ -202,22 +200,15 @@ export default {
     },
     async checkEmailExist(email) {
       await UserAPI.getUserByEmail(email).then((res) => {
-        if (res.data) {
-          return false;
-        } else {
-          return true;
-        }
+        console.log("Check email", res.data ? true : false)
+        return res.data;
       }).catch((err) => {
         console.log(err);
       });
     },
     async checkUsernameExist(username) {
       await UserAPI.getUserByUsername(username).then((res) => {
-        if (res.data) {
-          return false;
-        } else {
-          return true;
-        }
+        return !(res.data);
       }).catch((err) => {
         console.log(err);
       });

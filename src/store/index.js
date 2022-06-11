@@ -5,10 +5,12 @@ import cart from "./modules/cart";
 import wishlist from "./modules/wishlist";
 import order from "./modules/order";
 import group from "./modules/group";
-
 import loading from "./modules/loading";
+import VuexPersistence from "vuex-persist";
 
-import createPersistedState from "vuex-persistedstate";
+const vuexLocal = new VuexPersistence({
+  storage: window.localStorage,
+});
 
 const storeData = {
   modules: {
@@ -18,13 +20,9 @@ const storeData = {
     wishlist,
     order,
     group,
-    loading
+    loading,
   },
-  plugins: [
-    createPersistedState({
-      storage: window.sessionStorage,
-    }),
-  ],
+  plugins: [vuexLocal.plugin],
 };
 
 const store = Vuex.createStore(storeData);

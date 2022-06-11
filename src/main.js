@@ -15,18 +15,18 @@ import VueSweetalert2 from "vue-sweetalert2";
 import "sweetalert2/dist/sweetalert2.min.css";
 
 //firebase
-import * as firebase from "firebase/app";
+// import * as firebase from "firebase/app";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyC9P1HaTCbjot1u3RepAViBU6A8yaqTRdw",
-  authDomain: "freshshop-1f7b3.firebaseapp.com",
-  projectId: "freshshop-1f7b3",
-  storageBucket: "freshshop-1f7b3.appspot.com",
-  messagingSenderId: "975118991781",
-  appId: "1:975118991781:web:3e264dd07ebebbab47284c",
-};
-// Vue.use(VueSweetalert2);
-firebase.initializeApp(firebaseConfig);
+// const firebaseConfig = {
+//   apiKey: "AIzaSyC9P1HaTCbjot1u3RepAViBU6A8yaqTRdw",
+//   authDomain: "freshshop-1f7b3.firebaseapp.com",
+//   projectId: "freshshop-1f7b3",
+//   storageBucket: "freshshop-1f7b3.appspot.com",
+//   messagingSenderId: "975118991781",
+//   appId: "1:975118991781:web:3e264dd07ebebbab47284c",
+// };
+// firebase.initializeApp(firebaseConfig);
+
 const app = createApp(App);
 app.use(router);
 app.use(store);
