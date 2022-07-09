@@ -1,6 +1,6 @@
 <template>
   <section class="relative overflow-hidden">
-    <div class="absolute z-0 top-0 left-0">
+    <div class="hidden md:block absolute z-0 top-0 left-0">
       <img src="/assets/images/subscribe-vec-1.png" alt="" class="w-80">
     </div>
     <div class="absolute z-0 top-0 right-0">
@@ -25,7 +25,10 @@
             <input type="email" placeholder="Email address"
               class="block border border-dark-800 w-full px-4 py-3 focus:outline-none">
             <button
-              class="w-full px-3 py-3 bg-violet-500 shadowViolet text-white font-medium uppercase">Subscribe</button>
+              class="w-full px-3 py-3 bg-black md:bg-violet-500 shadowViolet text-white font-medium uppercase"
+            >
+              Subscribe
+            </button>
           </div>
         </div>
       </div>

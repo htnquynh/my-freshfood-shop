@@ -1,11 +1,11 @@
 <template>
-
   <div class="px-4 py-4 bg-white">
-    <div class="aspect-square flex items-center">
-      <img class="" :src="product.image" alt="Product image" @click="detailProduct()" />
+    <div @click="detailProduct()" class="aspect-square flex items-center cursor-pointer">
+      <img class="transition-transform duration-300 ease-in-out hover:transform hover:scale-115" :src="product.image"
+        alt="Product image" />
     </div>
 
-    <div class="space-y-4">
+    <div class="space-y-4 relative z-2">
       <div class="flex justify-between items-center gap-2">
         <ButtonIcon @click="compare(product._id)" class="flex-shrink-0">
           <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor">
@@ -31,7 +31,7 @@
       </div>
       <div>
         <p class="text-gray-700">{{ product.category }}</p>
-        <p class="text-lg font-bold">{{ product.name }}</p>
+        <p class="text-lg font-bold line-clamp-2 cursor-pointer hover:text-sky-500">{{ product.name }}</p>
         <div class="pt-2 flex items-center justify-end gap-1">
           <p class="font-bold">{{ $filters.toVND(product.price) }}</p>
           <p class="">/ 1 kg</p>

@@ -9,7 +9,7 @@ import loading from "./modules/loading";
 import VuexPersistence from "vuex-persist";
 
 const vuexLocal = new VuexPersistence({
-  storage: window.localStorage,
+  storage: window.sessionStorage,
 });
 
 const storeData = {

@@ -1,13 +1,13 @@
 <template>
-
-  <div class="shop-page">
-    <div class="page-title">
-      <h2>Verify Email!</h2>
-      <hr>
+  <div class="py-12 max-w-xs mx-auto space-y-8">
+    <div class="flex flex-col justify-center items-center">
+      <h2 class="relative z-2 text-4xl font-bold text-center">Verify Email!</h2>
+      <hr class="relative z-0 w-full max-w-40 border-t-14 border-fuchsia-200">
     </div>
 
-    <div class="login-form">
-      <div class="checkout-basic">
+
+    <div class="space-y-8">
+      <div class="w-full space-y-4">
         <p class="font-semibold text-center">We sent a code to your email. Please check mail and enter code in here.</p>
 
         <div class="input-opt">
@@ -22,11 +22,10 @@
           <input type="text" ref="code-5" id="code-5" maxlength="1" v-model="otp_5">
         </div>
       </div>
-      <div class="checkout-action">
-        <a class="btn-checkout" @click="verify()">
-          <span>Verify</span>
-        </a>
-      </div>
+      <a ref="btn-login" @click="verify()"
+        class="block text-center w-full px-8 py-3 bg-violet-600 text-white uppercase font-semibold">
+        <span>Verify</span>
+      </a>
     </div>
   </div>
 </template>
@@ -95,64 +94,3 @@ export default {
   }
 };
 </script>
-
-<style lang="postcss" scoped>
-.home {
-  @apply flex flex-col;
-}
-
-.home>.header-page {
-  @apply w-full;
-}
-
-.page-content {
-  @apply p-0 sm: p-4;
-  @apply bg-white sm: bg-transparent;
-}
-
-.shop-page {
-  @apply max-w-xs mx-auto;
-  @apply px-4 pb-16 md: pb-24;
-  @apply flex flex-col items-start md: items-center gap-2;
-}
-
-.page-title {
-  @apply py-4 md: py-8;
-  @apply flex flex-col md: justify-center gap-2 md:gap-4;
-}
-
-.page-title h2 {
-  @apply text-xl md: text-4xl font-black;
-}
-
-.page-title hr {
-  @apply w-full max-w-3xl;
-  @apply border-t border-secondary;
-}
-
-.login-form {
-  @apply w-full;
-  @apply flex flex-col items-center;
-}
-
-.checkout-basic {
-  @apply w-full;
-  @apply flex flex-col gap-4;
-}
-
-
-.checkout-action {
-  @apply pt-8 md: pt-10;
-  @apply w-full;
-  @apply flex flex-col items-center;
-}
-
-a.btn-checkout {
-  @apply w-full;
-  @apply flex flex-row justify-center items-center gap-2;
-  @apply p-2;
-  @apply bg-gold-500 text-white;
-  @apply text-base sm: text-lg font-semibold;
-  @apply rounded-xl;
-}
-</style>

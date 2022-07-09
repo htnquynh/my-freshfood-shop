@@ -84,10 +84,10 @@ export default {
           let user_login = JSON.stringify(res.data.accessToken);
           sessionStorage.setItem("user_login", user_login);
 
-          this.$store.dispatch('setUser', res.data.user).then(() => {
+          this.$store.dispatch('setUser', res.data.user).then(async () => {
             console.log('Set user: ', res.data.user);
-            this.getUserCart();
-            this.getWishlist();
+            await this.getUserCart();
+            await this.getWishlist();
             this.stop_load();
             this.$router.push("/");
             this.$swal.fire(

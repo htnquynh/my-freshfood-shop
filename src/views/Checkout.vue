@@ -1,6 +1,6 @@
 <template>
-  <div class="shop-page">
-    <div v-show="noItems == 0" class="checkout-wrapper h-max">
+  <div class="container py-16">
+    <div v-show="noItems == 0" class="md:flex md:gap-4 h-max">
       <div class="w-full flex flex-col items-center p-8">
         <img src="../assets/image/empty.png" class="w-full max-w-xs h-auto mx-auto">
         <p class="text-xl md:text-2xl font-medium py-8">Nothing to Checkout</p>
@@ -13,27 +13,29 @@
         </router-link>
       </div>
     </div>
-    <div v-show="noItems != 0" class="checkout-wrapper">
-      <div class="checkout-info">
-        <div class="checkout-basic">
-          <div class="input-text">
-            <label for="">Fullname</label>
-            <input type="text" v-model="full_name" required>
+    <div v-show="noItems != 0" class="md:flex md:gap-4">
+      <div class="w-full space-y-4">
+        <div class="space-y-4 max-w-lg">
+          <div class="space-y-2">
+            <label class="block font-medium">Fullname</label>
+            <input class="w-full px-3 py-2 border border-black focus:outline-none" type="text" v-model="full_name"
+              required>
           </div>
 
-          <div class="input-text">
-            <label for="">Address</label>
-            <input type="text" v-model="address" required>
+          <div class="space-y-2">
+            <label class="block font-medium">Address</label>
+            <input class="w-full px-3 py-2 border border-black focus:outline-none" type="text" v-model="address"
+              required>
           </div>
 
-          <div class="input-text">
-            <label for="">Phone</label>
-            <input type="text" v-model="phone" required>
+          <div class="space-y-2">
+            <label class="block font-medium">Phone</label>
+            <input class="w-full px-3 py-2 border border-black focus:outline-none" type="text" v-model="phone" required>
           </div>
         </div>
 
-        <div class="payment-selection">
-          <h3 class="payment-title">Payment</h3>
+        <div class="space-y-2">
+          <h3 class="font-medium">Payment</h3>
 
           <div class="group-radio-box">
             <label class="radio-box">
@@ -51,46 +53,46 @@
         </div>
       </div>
 
-      <div class="summary-cart">
-        <h2>Summary Cart.</h2>
+      <div class="w-full md:max-w-xs lg:max-w-sm space-y-4">
+        <h2 class="text-3xl font-bold">Summary Cart.</h2>
 
-        <div class="order-list-item">
+        <div class="space-y-4">
           <CheckoutItem v-for="item in cart.cartItems" :key="item._id" :item="item" />
         </div>
 
-        <div class="cart-cost">
-          <div class="cart-cost-item">
+        <div class="space-y-4">
+          <div class="flex justify-between items-center">
             <p>Subtotal</p>
-            <p class="cost-value"> {{ $filters.toVND(totalPrice) }} </p>
+            <p class="font-bold"> {{ $filters.toVND(totalPrice) }} </p>
           </div>
 
-          <div class="cart-cost-item">
+          <div class="flex justify-between items-center">
             <p>Shipping Cost</p>
-            <p class="cost-value"> {{ $filters.toVND('0') }} </p>
+            <p class="font-bold"> {{ $filters.toVND('0') }} </p>
           </div>
 
-          <div class="cart-cost-item cart-total-cost">
+          <div class="flex justify-between items-center font-bold">
             <p>Total</p>
-            <p class="cost-value"> {{ $filters.toVND(totalPrice) }} </p>
+            <p class=""> {{ $filters.toVND(totalPrice) }} </p>
           </div>
         </div>
 
-        <div class="checkout-action">
-          <a @click="placeOrder" class="btn-checkout">
-            <svg xmlns="http://www.w3.org/2000/svg" height="24px" width="24px" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M0 0h24v24H0V0z" fill="none" />
-              <path
-                d="M9 16.2l-3.5-3.5c-.39-.39-1.01-.39-1.4 0-.39.39-.39 1.01 0 1.4l4.19 4.19c.39.39 1.02.39 1.41 0L20.3 7.7c.39-.39.39-1.01 0-1.4-.39-.39-1.01-.39-1.4 0L9 16.2z" />
-            </svg>
-            <span>Place Order</span>
-          </a>
-        </div>
+
+        <BaseButtonPrimary class="!px-8 !py-4 w-full flex justify-center" @click="placeOrder()">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" width="24px" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M0 0h24v24H0V0z" fill="none" />
+            <path
+              d="M9 16.2l-3.5-3.5c-.39-.39-1.01-.39-1.4 0-.39.39-.39 1.01 0 1.4l4.19 4.19c.39.39 1.02.39 1.41 0L20.3 7.7c.39-.39.39-1.01 0-1.4-.39-.39-1.01-.39-1.4 0L9 16.2z" />
+          </svg>
+          <span>Place Order</span>
+        </BaseButtonPrimary>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import BaseButtonPrimary from '../components/base/BaseButtonPrimary.vue';
 import CheckoutItem from '../components/CheckoutItem.vue';
 
 import { mapGetters, mapActions } from "vuex";
@@ -98,6 +100,7 @@ import OrderAPI from "../api/OrderAPI";
 
 export default {
   components: {
+    BaseButtonPrimary,
     CheckoutItem,
   },
   data() {
@@ -129,14 +132,13 @@ export default {
   },
   methods: {
     ...mapActions(["getUserCart", "clearCart", "start_load", "stop_load"]),
-    getOrderInfo() {
+    async getOrderInfo() {
       this.start_load();
       this.full_name = this.userLogin.full_name;
       this.address = this.userLogin.address;
       this.phone = this.userLogin.phone;
-      this.getUserCart().then(() => {
-        this.stop_load();
-      });
+      await this.getUserCart();
+      this.stop_load();
     },
     hasEmpty() {
       if (this.full_name == ''
@@ -203,118 +205,3 @@ export default {
   },
 };
 </script>
-
-<style lang="postcss" scoped>
-.home {
-  @apply flex flex-col;
-}
-
-.home>.header-page {
-  @apply w-full;
-}
-
-.page-content {
-  @apply p-4;
-}
-
-.shop-page {
-  @apply w-full max-w-5xl mx-auto;
-  /* @apply flex flex-col items-start;
-  @apply pt-4 pb-6 md:pb-8; */
-  /* @apply bg-white; */
-}
-
-.checkout-wrapper {
-  @apply w-full;
-  @apply flex flex-col gap-4 md: flex-row items-start md:gap-4;
-}
-
-.checkout-info {
-  @apply p-4 md: p-6 lg:p-8;
-  @apply w-full;
-  @apply flex flex-col gap-4;
-
-  @apply bg-white;
-}
-
-.checkout-basic {
-  @apply w-full;
-  @apply flex flex-col gap-4;
-}
-
-div.payment-selection {
-  /* @apply border-t border-secondary; */
-  @apply w-full;
-  @apply flex flex-col;
-  /* @apply relative; */
-}
-
-.payment-selection .payment-title {
-  @apply pb-4 pt-2;
-  @apply text-lg font-semibold uppercase;
-}
-
-.checkout-action {
-  @apply w-full;
-  @apply flex flex-row justify-end;
-}
-
-a.btn-checkout {
-  @apply my-4;
-  @apply w-full;
-  @apply flex flex-row justify-center items-center gap-2;
-  @apply px-8 py-4;
-  @apply bg-gold-500 text-white;
-  @apply text-base font-semibold;
-
-  box-shadow: rgba(255, 201, 40, 0.6) 0px 12px 10px -10px;
-}
-
-.summary-cart {
-  @apply w-full md: max-w-xs lg:max-w-sm;
-  @apply p-4 md: p-6 lg:p-8;
-  height: fit-content;
-  /* @apply border border-black; */
-  @apply flex flex-col gap-0;
-  @apply bg-white;
-}
-
-.summary-cart h2 {
-  @apply text-lg font-bold;
-  @apply pb-2;
-  /* @apply border-b-2;
-  border-color: #F27C4D; */
-}
-
-.order-list-item {
-  @apply py-4;
-  @apply w-full;
-  @apply flex flex-col gap-4;
-}
-
-.cart-cost {
-  @apply py-4;
-  @apply flex flex-col gap-2;
-  @apply text-base;
-}
-
-.cart-cost-item {
-  @apply w-full;
-  @apply flex flex-row justify-between items-center;
-  /* @apply border; */
-}
-
-.cart-cost-item .cost-value {
-  @apply font-semibold;
-}
-
-.cart-total-cost {
-  @apply text-base;
-  @apply pt-1;
-}
-
-.cart-total-cost p,
-.cart-total-cost .cost-value {
-  @apply font-extrabold;
-}
-</style>

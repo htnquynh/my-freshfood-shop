@@ -101,7 +101,7 @@ export default {
         value = parseInt(value);
         // return value;
       }
-      var formatter = new Intl.NumberFormat("vi-VN", {
+      let formatter = new Intl.NumberFormat("vi-VN", {
         style: "currency",
         currency: "VND",
         minimumFractionDigits: 0,

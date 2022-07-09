@@ -1,14 +1,14 @@
 <template>
   <main class="container py-16 space-y-14">
 
-    <div class="flex gap-8">
+    <div class="space-y-4 md:space-y-0 md:flex md:gap-8">
       <div class="w-full border border-black rounded-md px-3 py-2 md:py-3 flex items-center gap-2">
         <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
           <path d="M0 0h24v24H0V0z" fill="none" />
           <path
             d="M15.5 14h-.79l-.28-.27c1.2-1.4 1.82-3.31 1.48-5.34-.47-2.78-2.79-5-5.59-5.34-4.23-.52-7.79 3.04-7.27 7.27.34 2.8 2.56 5.12 5.34 5.59 2.03.34 3.94-.28 5.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
         </svg>
-        <input class="focus:outline-none" type="search" v-model="keyword" v-on:keyup.enter="searchMenu()"
+        <input class="w-full focus:outline-none" type="search" v-model="keyword" v-on:keyup.enter="searchMenu()"
           placeholder="Search ...">
       </div>
       <div class="border border-black relative inline-flex self-center w-max">
@@ -21,7 +21,6 @@
             d="M12.0041 9.29C11.8163 9.10069 11.5607 8.9942 11.2941 8.9942C11.0275 8.9942 10.7719 9.10069 10.5841 9.29L7.65409 12.23V4C7.65409 3.44772 7.20638 3 6.65409 3C6.10181 3 5.65409 3.44772 5.65409 4V12.23L2.71409 9.29C2.32197 8.89788 1.68621 8.89788 1.29409 9.29C0.901969 9.68212 0.901969 10.3179 1.29409 10.71L5.94409 15.35C6.33413 15.7377 6.96405 15.7377 7.35409 15.35L12.0041 10.71C12.1934 10.5222 12.2999 10.2666 12.2999 10C12.2999 9.73336 12.1934 9.47777 12.0041 9.29Z"
             fill="currentColor" />
         </svg> -->
-
         <select v-model="selectedSort" class="pl-4 pr-10 w-full sm:w-52 h-10 focus:outline-none">
           <option value="newest">Newest</option>
           <option value="oldest">Oldest</option>
@@ -33,7 +32,7 @@
 
     <div class="space-y-8">
       <div v-if="displayedGroups.length != 0" class="w-full">
-        <div class="grid grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-8">
           <Group :group="group" v-for="group in displayedGroups" :key="group._id" />
         </div>
         <div class="w-full mt-8">
@@ -93,14 +92,12 @@ export default {
       pages: [],
     };
   },
-  created() {
+  async created() {
     this.start_load();
-    this.getGroups()
-      .then(() => {
-        console.log("Fetch Group");
-        this.recommend_menu = this.groups;
-        this.stop_load();
-      });
+    await this.getGroups();
+    console.log("Fetch Group");
+    this.recommend_menu = this.groups;
+    this.stop_load();
   },
   computed: {
     ...mapGetters(["groups"]),

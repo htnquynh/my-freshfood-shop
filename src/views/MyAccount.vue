@@ -158,21 +158,18 @@ export default {
         if (result.isConfirmed) {
           this.start_load();
           sessionStorage.removeItem("user_login");
-          this.logoutUser().then(() => {
-            this.logoutCart().then(() => {
-              this.logoutWishlist().then(() => {
-                this.stop_load();
-                if (this.$router.currentRoute.path != "/") {
-                  this.$router.push("/");
-                }
-                this.$swal.fire(
-                  'Goodbye!',
-                  'Successful Logout!',
-                  'success'
-                );
-              });
-            });
-          });
+          this.logoutUser()
+          this.logoutCart()
+          this.logoutWishlist()
+          this.stop_load();
+          if (this.$router.currentRoute.path != "/") {
+            this.$router.push("/");
+          }
+          this.$swal.fire(
+            'Goodbye!',
+            'Successful Logout!',
+            'success'
+          );
         }
       });
     },
@@ -183,44 +180,18 @@ export default {
 <style lang="postcss" scoped>
 /* @import url('../assets/style/select.css'); */
 
-.home {
-  @apply flex flex-col;
-}
-
-.home>.header-page {
-  @apply w-full;
-}
-
-.page-content {
-  @apply p-4;
-  /* @apply flex flex-col; */
-}
-
 .shop-page {
   @apply w-full max-w-5xl mx-auto;
-  /* @apply flex flex-col gap-4 md:gap-8; */
-  /* @apply flex flex-col gap-4 sm:flex-row sm:gap-0 md:gap-0 lg:gap-0 items-start; */
-
   @apply flex flex-col sm: flex-row items-start;
-
-  /* @apply sm:divide-x; */
-  /* @apply grid grid-cols-1 sm:grid-cols-2 sm:place-items-start; */
-
   @apply pt-4 pb-6 md: pb-8;
-
   @apply bg-white;
 }
 
 .my-account-nav {
   @apply flex-shrink-0;
   @apply w-full sm: w-16 md:w-60 lg:w-72;
-  /* @apply flex flex-col justify-start gap-4; */
-
   @apply grid grid-flow-col place-items-center sm: grid-flow-row md:place-items-stretch md:gap-4;
-
   @apply p-2 sm: px-2 sm:py-4 md:px-3 md:py-6 lg:px-4 lg:py-8;
-  /* @apply bg-dominant; */
-
   @apply md: rounded-3xl;
 }
 
@@ -231,10 +202,7 @@ export default {
 .my-account-nav .nav-link {
   @apply p-2 md: py-1 lg:px-4 lg:py-2;
   @apply flex flex-row justify-between;
-  @apply font-semibold;
-
   @apply border-b-2 sm: border-b-0 sm:border-l-4 border-transparent;
-
   @apply text-sm lg: text-base;
 }
 
@@ -252,7 +220,7 @@ export default {
 
 .active-link {
   @apply border-gold-500 !important;
-  @apply font-extrabold !important;
+  @apply font-bold !important;
 }
 
 .active-link svg.nav-link-arrow {

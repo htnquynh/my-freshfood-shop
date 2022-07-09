@@ -78,13 +78,13 @@
             </li>
             <li v-show="is_login" class="">
               <router-link to="/wishlist">
-                <a>
+                <a class="relative">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
                       d="M22.1 9.1C22 5.7 19.3 3 15.9 3C14.8 3 13.1 3.8 12.4 5.1C12.3 5.4 11.9 5.4 11.8 5.1C11 3.9 9.4 3.1 8.2 3.1C4.9 3.1 2.1 5.8 2 9.1V9.2V9.3C2 11 2.7 12.6 3.9 13.8C3.9 13.8 3.9 13.8 3.9 13.9C4 14 8.8 18.2 11 20.1C11.6 20.6 12.5 20.6 13.1 20.1C15.3 18.2 20 14 20.2 13.9C20.2 13.9 20.2 13.9 20.2 13.8C21.4 12.7 22.1 11.1 22.1 9.3V9.1Z"
                       fill="currentColor" />
                   </svg>
-                  <div class="badge">
+                  <div class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 w-4 h-4 p-0.5 text-xs text-center leading-3 bg-red-500 text-white rounded-full">
                     <span>{{ wishlist_length }}</span>
                   </div>
                 </a>
@@ -97,7 +97,7 @@
                     d="M8.31579 2H15.6842C19.1723 2 22 4.82768 22 8.31579V15.6842C22 19.1723 19.1723 22 15.6842 22H8.31579C4.82768 22 2 19.1723 2 15.6842V8.31579C2 4.82768 4.82768 2 8.31579 2ZM9.10944 10.4202C9.8853 11.1645 10.9251 11.5699 12 11.5474C14.2402 11.5944 16.0956 9.81903 16.1474 7.57895C16.1474 7.14293 15.7939 6.78947 15.3579 6.78947C14.9219 6.78947 14.5684 7.14293 14.5684 7.57895C14.5114 8.94453 13.3661 10.01 12 9.96842C10.6357 10.0099 9.49353 8.94289 9.44211 7.57895C9.44211 7.14293 9.08865 6.78947 8.65263 6.78947C8.21662 6.78947 7.86316 7.14293 7.86316 7.57895C7.88526 8.65385 8.33358 9.67591 9.10944 10.4202Z"
                     fill="currentColor" />
                 </svg>
-                <div class="badge">
+                <div class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 w-4 h-4 p-0.5 text-xs text-center leading-3 bg-sky-500 text-white rounded-full">
                   <span>{{ noItems }}</span>
                 </div>
               </a>
@@ -142,7 +142,7 @@
                   fill="currentColor" />
               </svg>
 
-              <div class="badge">
+              <div class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 w-5 h-5 p-1 text-xs font-medium text-center leading-3 bg-gold-500 text-white rounded-full">
                 <span>{{ noItems }}</span>
               </div>
             </a>
@@ -151,14 +151,14 @@
 
         <ul class="header-mobile-main-menu" :class="{ 'header-mobile-menu-open': is_menu_open }">
           <li class="header-mobile-menu-item">
-            <div class="header-action-search">
-              <svg @click="clickSearch()" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24"
+            <div class="w-full md:w-40 border border-black px-3 py-2 flex flex-row items-center gap-2">
+              <svg class="w-6 h-6" @click="clickSearch()" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24"
                 width="24px" fill="currentColor">
                 <path d="M0 0h24v24H0V0z" fill="none" />
                 <path
                   d="M15.5 14h-.79l-.28-.27c1.2-1.4 1.82-3.31 1.48-5.34-.47-2.78-2.79-5-5.59-5.34-4.23-.52-7.79 3.04-7.27 7.27.34 2.8 2.56 5.12 5.34 5.59 2.03.34 3.94-.28 5.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
               </svg>
-              <input type="search" v-model="search" placeholder="Search ..." />
+              <input class="bg-transparent focus:outline-none w-full" type="search" v-model="search" placeholder="Search ..." />
             </div>
           </li>
           <li class="header-mobile-menu-item">
@@ -185,11 +185,10 @@
       </div>
     </div>
     <div class="w-full bg-violet-700 text-white">
-      <div class="container py-2 flex justify-center gap-16">
+      <div class="container py-2 flex flex-wrap justify-center gap-x-4 md:gap-16">
         <p>Free ship only in 15/6</p>
         <p>Big sale up to 70%</p>
         <a href="#" class="underline">Shop now</a>
-
       </div>
     </div>
   </header>
@@ -213,6 +212,10 @@ export default {
   computed: {
     ...mapGetters(["is_login", "keyword", "noItems", "wishlist_length"]),
   },
+  mounted() {
+    console.log("is_login: ", this.is_login);
+    // console.log("")
+  },
   methods: {
     ...mapActions([
       "setKeyword",
@@ -227,6 +230,7 @@ export default {
       this.is_menu_open = !this.is_menu_open;
     },
     toggleMiniCart() {
+      console.log("In toggle mini cart: ", this.is_login);
       if (this.is_login) {
         this.setVisibleMiniCart();
         console.log("Toggle");
@@ -283,32 +287,8 @@ export default {
   @apply px-4;
 }
 
-.main-menu {
-  @apply flex flex-row;
-}
-
 .main-menu li {
   @apply px-4;
-}
-
-
-.header-action-search {
-  @apply w-full md: w-40;
-  @apply flex flex-row items-center gap-2;
-  @apply px-3 py-2;
-  @apply bg-dominant;
-  @apply rounded-xl;
-}
-
-.header-action-search svg {
-  @apply w-6 h-6;
-  @apply text-secondary opacity-50;
-}
-
-.header-action-search input[type="search"] {
-  @apply bg-transparent;
-  @apply focus: outline-none;
-  @apply w-full;
 }
 
 .header-mobile-item {
@@ -323,15 +303,6 @@ export default {
 .cart a {
   @apply flex flex-row items-center gap-2;
   @apply relative;
-}
-
-.cart>a>.badge {
-  @apply bg-gold-500 text-white;
-  @apply rounded-full;
-  @apply w-5 h-5;
-  @apply p-1;
-  @apply text-xs font-medium text-center leading-3;
-  @apply absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2;
 }
 
 .header-mobile-main-menu {
@@ -359,17 +330,5 @@ export default {
   @apply z-10;
 
   @apply transform scale-y-100 transition ease-in-out duration-500 sm: duration-700;
-}
-
-.btn-login {
-  @apply bg-peach-500 text-white;
-  @apply px-4 mx-2;
-  @apply uppercase font-bold text-sm;
-}
-
-.btn-signup {
-  @apply bg-gold-100;
-  @apply px-4 mx-2;
-  @apply uppercase font-bold text-sm;
 }
 </style>

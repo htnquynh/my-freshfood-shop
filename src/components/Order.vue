@@ -123,11 +123,13 @@ export default {
   /* @apply w-72; */
   @apply p-4;
   @apply flex flex-col gap-3;
-  @apply bg-dominant;
+  /*@apply border;*/
+  @apply bg-zinc-50;
+  /*@apply bg-dominant;*/
   /* @apply divide-y divide-secondary divide-dashed; */
 
   @apply w-full;
-  @apply rounded-2xl;
+  /*@apply rounded-2xl;*/
 
   box-shadow: rgba(57, 42, 35, 0.05) 0px 12px 10px -10px;
 }
@@ -150,10 +152,10 @@ p.order-date {
   @apply text-xs;
 }
 p.order-status {
-  @apply px-2 py-1;
-  @apply rounded-lg;
-  @apply text-gold-500 text-xs font-medium tracking-wide;
-  @apply bg-gold-100;
+  @apply px-3 py-1;
+  @apply rounded-full;
+  @apply text-white text-xs font-medium;
+  @apply bg-sky-500;
 }
 
 .order-list-item {
@@ -209,7 +211,7 @@ p.order-status {
 
 .order-price > span {
   @apply px-1;
-  @apply text-base font-extrabold;
+  @apply text-base font-bold;
 }
 
 .product-qty {

@@ -5,7 +5,6 @@
 
     <router-view />
 
-    <GlobalSubscribe />
     <GlobalFooter />
 
     <LoadScreen :isLoading="isLoading" />
@@ -70,7 +69,6 @@ import LoadScreen from "./components/LoadScreen.vue";
 import GlobalHeader from "./components/global/GlobalHeader.vue";
 import GlobalFooter from "./components/global/GlobalFooter.vue";
 import MiniCart from "./components/MiniCart.vue";
-import GlobalSubscribe from "./components/global/GlobalSubscribe.vue";
 import { mapGetters } from "vuex";
 import * as io from "socket.io-client";
 import moment from "moment";
@@ -81,7 +79,6 @@ export default {
     GlobalHeader,
     GlobalFooter,
     MiniCart,
-    GlobalSubscribe,
   },
   data() {
     return {

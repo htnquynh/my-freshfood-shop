@@ -17,16 +17,16 @@ const actions = {
     };
 
     await WishlistAPI.get(config)
-    .then((res) => {
-      if(res.data.items) {
-        commit("SET_WISHLIST", res.data.items);
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+      .then((res) => {
+        if (res.data.items) {
+          commit("SET_WISHLIST", res.data.items);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   },
-  async addItemToWishlist({ commit }, product) {
+  addItemToWishlist({ commit }, product) {
     commit("ADD_ITEM_TO_WISHLIST", product);
   },
   async deleteWishlistItem({ commit }, product_id) {
@@ -40,13 +40,13 @@ const actions = {
     let items = state.wishlist_items.map((product) => product._id);
 
     await WishlistAPI.add(items, config)
-    .then((res) => {
-      console.log(res);
-      dispatch("getWishlist");
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+      .then((res) => {
+        console.log(res);
+        dispatch("getWishlist");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   },
   logoutWishlist({ commit }) {
     commit("SET_WISHLIST", []);

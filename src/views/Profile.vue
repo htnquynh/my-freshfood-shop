@@ -71,8 +71,9 @@
             type="text" v-model="user.birthdate" />
         </div>
 
-        <button class="px-6 py-3 w-full bg-violet-600 text-white font-semibold" @click="changeInfo()">Update
-          Info</button>
+        <button class="px-6 py-3 w-full bg-violet-600 text-white font-semibold" @click="changeInfo()">
+          Update Info
+        </button>
       </div>
     </div>
   </div>
@@ -143,15 +144,14 @@ export default {
 
       await UserAPI.update(this.userLogin._id, this.user)
         .then((res) => {
-          this.setUser(res.data.userUpdated).then(() => {
-            console.log("Set new user: ", res.data.userUpdated);
-            this.stop_load();
-            this.$swal.fire(
-              "Success!",
-              "You have successfully updated your information",
-              "success"
-            );
-          });
+          this.setUser(res.data.userUpdated);
+          console.log("Set new user: ", res.data.userUpdated);
+          this.stop_load();
+          this.$swal.fire(
+            "Success!",
+            "You have successfully updated your information",
+            "success"
+          );
         })
         .catch((err) => {
           this.stop_load();

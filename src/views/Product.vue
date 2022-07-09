@@ -134,12 +134,11 @@ export default {
       more_product: [],
     };
   },
-  created() {
+  async created() {
     this.start_load();
-    this.getProducts().then(() => {
-      this.more_product = this.products.slice(0, 4);
-      this.stop_load();
-    });
+    await this.getProducts();
+    this.more_product = this.products.slice(0, 4);
+    this.stop_load();
   },
   computed: {
     ...mapGetters(["is_login", "selectedProduct", "products", "wishlist"]),
@@ -228,16 +227,15 @@ export default {
           }
         ];
         await CartAPI.add(items, config)
-          .then((res) => {
+          .then(async (res) => {
             console.log(res.data);
-            this.getUserCart().then(() => {
-              this.stop_load();
-              this.$swal.fire(
-                'Oh great!',
-                'Add product to cart successfully!',
-                'success'
-              );
-            });
+            await this.getUserCart();
+            this.stop_load();
+            this.$swal.fire(
+              'Oh great!',
+              'Add product to cart successfully!',
+              'success'
+            );
           })
           .catch((error) => {
             console.log(error);
@@ -272,17 +270,14 @@ export default {
         );
         return;
       }
-      await this.addItemToWishlist(product).then((res) => {
-        console.log(res);
-        this.addItemsToWishlist().then(() => {
-          this.stop_load();
-          this.$swal.fire(
-            'Great!',
-            'Added product to wishlist successfully!',
-            'success'
-          )
-        });
-      });
+      this.addItemToWishlist(product);
+      await this.addItemsToWishlist();
+      this.stop_load();
+      this.$swal.fire(
+        'Great!',
+        'Added product to wishlist successfully!',
+        'success'
+      );
     },
   },
 };

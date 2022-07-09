@@ -1,13 +1,16 @@
 <template>
   <div class="w-full">
     <div class="">
-      <div class="aspect-16/24">
-        <img class="object-cover" :src="group.image" @click="detailGroup()" alt="Image">
+      <div @click="detailGroup()" class="aspect-16/24 cursor-pointer overflow-hidden ">
+        <img class="object-cover transition-transform duration-300 ease-in-out hover:transform hover:scale-115"
+          :src="group.image" alt="Image">
       </div>
 
       <div class="px-6 py-4 space-y-3 w-full bg-fuchsia-50">
-        <h4 class="text-violet-800 text-xl font-bold line-clamp-1">{{ group.title }}</h4>
-
+        <h4 class="text-violet-800 text-xl font-bold line-clamp-1 cursor-pointer hover:text-sky-500"
+          @click="detailGroup()">
+          {{ group.title }}
+        </h4>
 
         <div class="w-full flex gap-2 overflow-x-auto">
           <GroupItem v-for="item in group.material" :key='item._id' :product='item.product' />
@@ -43,19 +46,6 @@ export default {
   props: ["group"],
   components: {
     GroupItem,
-  },
-  filters: {
-    toVND: function (value) {
-      if (typeof value !== "number") {
-        value = parseInt(value);
-      }
-      var formatter = new Intl.NumberFormat("vi-VN", {
-        style: "currency",
-        currency: "VND",
-        minimumFractionDigits: 0,
-      });
-      return formatter.format(value);
-    },
   },
   methods: {
     ...mapActions(["setSelectedGroup",]),

@@ -1,7 +1,7 @@
 <template>
   <main class="">
     <div class="container py-16 flex gap-8">
-      <div class="w-72 space-y-6">
+      <div class="hidden md:block w-72 space-y-6">
         <div class="w-full space-y-2">
           <div class="font-bold pb-2 border-b border-black">
             <h3>Sort by</h3>
@@ -94,7 +94,7 @@
       </div>
 
       <div v-if="displayedProducts.length != 0" class="w-full">
-        <div class="grid grid-cols-4 gap-8">
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-8">
           <Product :product="product" v-for="product in displayedProducts" :key="product._id" />
         </div>
         <div class="w-full mt-8">
@@ -157,7 +157,7 @@ export default {
       max: 1000000,
       isApplyPrice: false,
       page: 1,
-      perPage: 6,
+      perPage: 12,
       pages: [],
 
       inputLeftHover: false,
@@ -166,14 +166,12 @@ export default {
       inputRightActive: false,
     };
   },
-  created() {
+  async created() {
     this.start_load();
-    this.getCategory();
-    this.getProducts().then((res) => {
-      console.log(res);
-      this.filterByKeyWord();
-      this.stop_load();
-    });
+    await this.getCategory();
+    await this.getProducts();
+    this.filterByKeyWord();
+    this.stop_load();
   },
   computed: {
     ...mapGetters(["products", "category"]),
@@ -189,7 +187,7 @@ export default {
       if (typeof value !== "number") {
         value = parseInt(value);
       }
-      var formatter = new Intl.NumberFormat("vi-VN", {
+      let formatter = new Intl.NumberFormat("vi-VN", {
         style: "currency",
         currency: "VND",
         minimumFractionDigits: 0,
@@ -239,7 +237,7 @@ export default {
         parseInt(this.priceFrom),
         parseInt(this.priceTo)
       );
-      var percent = ((this.priceFrom - this.min) / (this.max - this.min)) * 100;
+      let percent = ((this.priceFrom - this.min) / (this.max - this.min)) * 100;
       this.$refs.sliderThumbLeft.style.left = percent + "%";
       this.$refs.sliderRange.style.left = percent + "%";
 
@@ -247,7 +245,7 @@ export default {
     },
     setInputRight() {
       this.priceTo = Math.max(parseInt(this.priceTo), parseInt(this.priceFrom));
-      var percent = ((this.priceTo - this.min) / (this.max - this.min)) * 100;
+      let percent = ((this.priceTo - this.min) / (this.max - this.min)) * 100;
       this.$refs.sliderThumbRight.style.right = 100 - percent + "%";
       this.$refs.sliderRange.style.right = 100 - percent + "%";
       this.callFilter();

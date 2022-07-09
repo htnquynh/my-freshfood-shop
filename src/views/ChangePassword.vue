@@ -1,23 +1,37 @@
 <template>
-  <div class="my-change-password-wrapper">
-    <div class="my-change-password">
-        <h3 class="account-title">Change Password</h3>
-        <div class="input-text">
-          <label for="">Old Password</label>
-          <input type="password" v-model="password">
+  <div class="w-full pt-4 pb-8">
+    <div class="w-full max-w-xs mx-auto space-y-4">
+      <h3 class="text-xl lg:text-2xl text-center font-semibold">Change Password</h3>
+      <div class="space-y-2">
+        <div class="space-y-2">
+          <label class="block font-medium">Old Password</label>
+          <input
+              class="w-full px-3 py-2 border border-black focus:outline-none focus:border-violet-500 focus:ring-3 focus:ring-violet-200 transition-all duration-200 ease-in"
+              type="password"
+              v-model="password"
+          >
         </div>
 
-        <div class="input-text">
-          <label for="">New Password</label>
-          <input type="password" v-model="new_password">
+        <div class="space-y-2">
+          <label class="block font-medium">New Password</label>
+          <input
+              class="w-full px-3 py-2 border border-black focus:outline-none focus:border-violet-500 focus:ring-3 focus:ring-violet-200 transition-all duration-200 ease-in"
+              type="password"
+              v-model="new_password"
+          >
         </div>
 
-        <div class="input-text">
-          <label for="">Confirm Password</label>
-          <input type="password" v-model="retype_new_password">
+        <div class="space-y-2">
+          <label class="block font-medium">Confirm Password</label>
+          <input
+              class="w-full px-3 py-2 border border-black focus:outline-none focus:border-violet-500 focus:ring-3 focus:ring-violet-200 transition-all duration-200 ease-in"
+              type="password"
+              v-model="retype_new_password"
+          >
         </div>
+      </div>
 
-        <a class="btn-change-password" @click="changePassword()">Change Password</a>
+      <button class="px-6 py-3 w-full bg-violet-600 text-white font-semibold text-center" @click="changePassword()">Change Password</button>
     </div>
   </div>
 </template>
@@ -35,8 +49,6 @@ export default {
       new_password: "",
       retype_new_password: "",
     }
-  },
-  created() {
   },
   computed: {
     ...mapGetters(["userLogin", "start_load", "stop_load"]),
@@ -86,37 +98,5 @@ export default {
 };
 </script>
 
-<style lang="postcss" scoped>
-
-.my-change-password-wrapper {
-  @apply w-full;
-  @apply p-3 sm:py-2 md:px-2 lg:px-4;
-}
-
-.my-change-password {
-  @apply w-full max-w-xs mx-auto;
-  @apply flex flex-col gap-2;
-  /* @apply bg-dominant; */
-}
-
-.my-change-password .input-text {
-  @apply w-full;
-  @apply flex-grow-0;
-}
-
-.my-change-password .account-title {
-  @apply w-full;
-  @apply pb-3 pt-2;
-  @apply text-lg font-extrabold uppercase;
-}
-
-a.btn-change-password {
-  @apply mt-4;
-  @apply w-max self-end;
-  @apply flex flex-row justify-center items-center gap-2;
-  @apply px-8 py-2;
-  @apply bg-gold-500 text-white;
-  @apply text-base font-semibold;
-  box-shadow: rgba(255, 201, 40, 0.6) 0px 12px 10px -10px;
-}
+<style>
 </style>

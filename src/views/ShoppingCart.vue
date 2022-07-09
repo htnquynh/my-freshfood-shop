@@ -1,55 +1,51 @@
 <template>
-  <div class="shop-page">
-
-    <div v-show="noItems == 0" class="checkout-wrapper">
+  <div class="container py-16">
+    <div v-show="noItems == 0">
       <div class="w-full flex flex-col items-center p-8">
-        <img src="../assets/image/empty.png" class="w-full max-w-xs h-auto mx-auto">
-        <p class="text-xl md:text-2xl font-medium py-8">Nothing in Cart</p>
+        <img src="../assets/image/empty.png" class="w-full max-w-xs h-auto mx-auto" alt="image">
+        <p class="text-xl md:text-2xl font-medium py-8">Nothing in your cart</p>
 
         <router-link to='/shop'>
-          <button class="px-8 py-3 text-base uppercase text-white font-bold bg-gold-500"
-            style="box-shadow: rgba(255, 201, 40, 0.6) 0px 12px 10px -10px;">
+          <button class="px-8 py-3 text-base uppercase text-white font-bold bg-sky-500">
             Buy now
           </button>
         </router-link>
       </div>
     </div>
 
-    <div v-show="noItems != 0" class="cart-wrapper">
-      <div class="list-product-wrapper">
-        <div class="list-product">
-          <ShoppingCartItem v-for="item in cart.cartItems" :key="item.id" :item="item" />
+    <div v-show="noItems != 0" class="relative w-full flex flex-col gap-4 md:flex-row items-start md:gap-4">
+      <div class="w-full">
+        <div class="space-y-4">
+          <ShoppingCartItem v-for="item in cart.cartItems" :key="item.id" :item="item" class="border" />
         </div>
       </div>
 
-      <div class="summary-cart">
-        <h2>Summary Cart.</h2>
+      <div class="w-full md:max-w-xs lg:max-w-sm p-4 md:p-6 lg:p-8 space-y-4">
+        <h2 class="text-3xl font-bold">Summary Cart.</h2>
 
-        <div class="cart-cost">
-          <div class="cart-cost-item">
+        <div class="w-full py-8 space-y-4">
+          <div class="flex justify-between items-center">
             <p>Subtotal</p>
-            <p class="cost-value"> {{ $filters.toVND(totalPrice) }} </p>
+            <p class="font-bold"> {{ $filters.toVND(totalPrice) }} </p>
           </div>
 
-          <div class="cart-cost-item">
+          <div class="flex justify-between items-center">
             <p>Shipping Cost</p>
-            <p class="cost-value"> {{ $filters.toVND('0') }} </p>
+            <p class="font-bold"> {{ $filters.toVND('0') }} </p>
           </div>
 
-          <div class="cart-cost-item cart-total-cost">
+          <div class="flex justify-between items-center font-bold">
             <p>Total</p>
-            <p class="cost-value"> {{ $filters.toVND(totalPrice) }} </p>
+            <p class="">{{ $filters.toVND(totalPrice) }} </p>
           </div>
         </div>
 
-        <div class="cart-coupon">
-          <div class="input-text">
-            <label for="">Coupon Code</label>
-            <input type="text">
-          </div>
+        <div class="space-y-2">
+          <label class="block font-medium">Coupon Code</label>
+          <input class="w-full px-3 py-2 border border-black focus:outline-none" type="text">
         </div>
 
-        <a @click="checkout()" class="btn-checkout">
+        <BaseButtonPrimary class="!px-8 !py-4 w-full flex justify-center" @click="checkout()">
           <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24"
             width="24px" fill="currentColor">
             <g>
@@ -62,20 +58,21 @@
             </g>
           </svg>
           <span>Checkout</span>
-        </a>
+        </BaseButtonPrimary>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-
+import BaseButtonPrimary from '../components/base/BaseButtonPrimary.vue';
 import ShoppingCartItem from '../components/ShoppingCartItem.vue';
 import { mapActions, mapGetters } from "vuex";
 
 export default {
   components: {
     ShoppingCartItem,
+    BaseButtonPrimary
   },
   data() {
     return {
@@ -101,11 +98,10 @@ export default {
   },
   watch: {
   },
-  created() {
+  async created() {
     this.start_load();
-    this.getUserCart().then(() => {
-      this.stop_load();
-    });
+    await this.getUserCart();
+    this.stop_load();
   },
   methods: {
     ...mapActions(["getUserCart", "start_load", "stop_load"]),
@@ -115,96 +111,3 @@ export default {
   },
 };
 </script>
-
-<style lang="postcss" scoped>
-.home {
-  @apply flex flex-col;
-}
-
-.home>.header-page {
-  @apply w-full;
-}
-
-.page-content {
-  @apply p-4;
-}
-
-.shop-page {
-  @apply w-full max-w-5xl mx-auto;
-  /* @apply flex flex-col items-start;
-
-  @apply pt-4 pb-6 md:pb-8; */
-  /* @apply bg-white; */
-}
-
-.cart-wrapper {
-  @apply w-full;
-  @apply flex flex-col gap-4 md: flex-row items-start md:gap-4;
-  @apply relative;
-}
-
-.list-product-wrapper {
-  @apply w-full;
-}
-
-.list-product-wrapper .list-product {
-  @apply w-full mx-auto;
-  @apply flex flex-col items-center gap-4;
-}
-
-.summary-cart {
-  @apply w-full md: max-w-xs lg:max-w-sm;
-  @apply p-4 md: p-6 lg:p-8;
-  height: fit-content;
-
-  /* @apply border border-black; */
-  @apply flex flex-col gap-0;
-  @apply bg-white;
-}
-
-.summary-cart h2 {
-  @apply text-lg font-bold;
-  @apply pb-2;
-  @apply border-b-2;
-  border-color: #F27C4D;
-}
-
-.cart-cost {
-  @apply py-4;
-  @apply flex flex-col gap-2;
-  @apply text-base;
-}
-
-.cart-cost-item {
-  @apply w-full;
-  @apply flex flex-row justify-between items-center;
-  /* @apply border; */
-}
-
-.cart-cost-item .cost-value {
-  @apply font-semibold;
-}
-
-.cart-coupon {
-  @apply py-2;
-}
-
-.cart-total-cost {
-  @apply text-base;
-  @apply pt-1;
-}
-
-.cart-total-cost p,
-.cart-total-cost .cost-value {
-  @apply font-extrabold;
-}
-
-a.btn-checkout {
-  @apply mt-4;
-  @apply w-full;
-  @apply flex flex-row justify-center items-center gap-2;
-  @apply p-2;
-  @apply bg-gold-500 text-white;
-  @apply text-base font-semibold;
-}
-</style>

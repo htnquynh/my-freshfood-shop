@@ -41,8 +41,10 @@ const chevron_right_svg = (`<svg class="" viewBox="0 0 24 24" fill="none" xmlns=
               <div v-for="item in listPost.slice(0, 3)" :key="item._id">
                 <div class="flex items-stretch gap-4">
                   <div class="w-40 h-24 flex-shrink-0">
-                    <div class="aspect-96/160 rounded-lg overflow-hidden">
-                      <img :src="item.thumbnail" class="w-full h-full object-cover" alt="Post cover">
+                    <div @click="goDetail(item._id)" class="aspect-96/160 rounded-lg overflow-hidden cursor-pointer">
+                      <img :src="item.thumbnail"
+                        class="w-full h-full object-cover transition-transform duration-300 ease-in-out hover:transform hover:scale-115"
+                        alt="Post cover">
                     </div>
                   </div>
                   <div class="w-full relative">
@@ -52,7 +54,9 @@ const chevron_right_svg = (`<svg class="" viewBox="0 0 24 24" fill="none" xmlns=
                       <span v-html="quote_svg"
                         class="absolute top-0 right-0 -z-1 w-8 text-violet-900 transform rotate-180"></span>
                     </div>
-                    <h4 class="pt-1 font-semibold text-justify line-clamp-2">{{ item.title }}</h4>
+                    <h4 @click="goDetail(item._id)"
+                      class="pt-1 font-semibold text-justify line-clamp-2 cursor-pointer hover:text-violet-600 text-lg font-bold line-clamp-2">
+                      {{ item.title }}</h4>
 
                     <!-- <p class="pt-1.5 text-sm text-gray-500 text-justify line-clamp-2">{{ item.subtitle }}</p> -->
                   </div>
@@ -66,7 +70,7 @@ const chevron_right_svg = (`<svg class="" viewBox="0 0 24 24" fill="none" xmlns=
 
       <div class="container py-16 space-y-16">
         <div class="space-y-5">
-          <h3 class="text-4xl font-bold">Post By Topic</h3>
+          <h3 class="text-4xl font-bold">Fresh Shop's Post</h3>
           <div class="flex items-center gap-5">
             <p v-for="(topic, index) in topics" :key="index" class="px-3 py-1 bg-gray-100 rounded-md font-medium">
               {{ topic }}
@@ -109,7 +113,11 @@ export default {
   },
   computed: {},
   watch: {},
-  methods: {},
+  methods: {
+    goDetail(post_id) {
+      this.router.push(`/post?id=${post_id}`);
+    }
+  },
 };
 </script>
 

@@ -7,7 +7,7 @@
     <div class="flex-1 flex gap-2 items-start">
       <div class="flex-1 text-sm space-y-1">
         <!-- <p class="product-category">{{ product.category }}</p> -->
-        <p class="font-semibold sp">{{ product.name }}</p>
+        <p class="font-semibold line-clamp-1">{{ product.name }}</p>
         <div class="flex items-center gap-1">
           <p class="text-violet-600 font-semibold">{{ $filters.toVND(product.price) }}</p>
           <p class="">/ 1 kg</p>
