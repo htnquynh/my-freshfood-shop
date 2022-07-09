@@ -58,7 +58,6 @@
 <script>
 import { mapActions } from "vuex";
 import UserAPI from "../api/UserAPI";
-// import * as firebase from "firebase";
 
 export default {
   components: {},

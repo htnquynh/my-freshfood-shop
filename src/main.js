@@ -14,19 +14,6 @@ import store from "./store";
 import VueSweetalert2 from "vue-sweetalert2";
 import "sweetalert2/dist/sweetalert2.min.css";
 
-//firebase
-// import * as firebase from "firebase/app";
-
-// const firebaseConfig = {
-//   apiKey: "AIzaSyC9P1HaTCbjot1u3RepAViBU6A8yaqTRdw",
-//   authDomain: "freshshop-1f7b3.firebaseapp.com",
-//   projectId: "freshshop-1f7b3",
-//   storageBucket: "freshshop-1f7b3.appspot.com",
-//   messagingSenderId: "975118991781",
-//   appId: "1:975118991781:web:3e264dd07ebebbab47284c",
-// };
-// firebase.initializeApp(firebaseConfig);
-
 const app = createApp(App);
 app.use(router);
 app.use(store);
@@ -56,7 +43,7 @@ app.config.globalProperties.$filters = {
       month: "numeric",
       day: "numeric",
       hour: "numeric",
-    minute: "numeric",
+      minute: "numeric",
       second: "numeric",
       hour12: false,
       timeZone: "Asia/Ho_Chi_Minh",
