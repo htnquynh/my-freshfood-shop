@@ -2,7 +2,7 @@
   <div class="container py-16">
     <div v-show="noItems == 0" class="md:flex md:gap-4 h-max">
       <div class="w-full flex flex-col items-center p-8">
-        <img src="../assets/image/empty.png" class="w-full max-w-xs h-auto mx-auto">
+        <img src="../assets/image/empty.png" class="w-full max-w-xs h-auto mx-auto" alt="image">
         <p class="text-xl md:text-2xl font-medium py-8">Nothing to Checkout</p>
 
         <router-link to='/shop'>

@@ -2,7 +2,7 @@
   <div class="container py-16 min-h-sm">
     <div v-show="wishlist_length == 0" class="w-full">
       <div class="w-full flex flex-col items-center p-8">
-        <img src="../assets/image/empty.png" class="w-full max-w-xs h-auto mx-auto">
+        <img src="../assets/image/empty.png" class="w-full max-w-xs h-auto mx-auto" alt="image">
         <p class="text-xl md:text-2xl font-medium py-8">Nothing in Wishlist</p>
 
         <router-link to='/shop'>

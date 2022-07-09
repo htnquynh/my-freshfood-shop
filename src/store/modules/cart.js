@@ -13,7 +13,7 @@ const getters = {
   totalPrice: (state) => {
     let cartTotalPrice = 0;
 
-    state.cart.cartItems.forEach((item) => {
+    state.cart.cartItems.filter(item => item.product.status === 'Enable').forEach((item) => {
       cartTotalPrice += parseInt(item.price);
     });
 
@@ -34,14 +34,14 @@ const actions = {
     };
 
     await CartAPI.getUserCart(config)
-    .then((res) => {
-      if(res.data) {
-        commit("SET_CART", res.data);
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+      .then((res) => {
+        if (res.data) {
+          commit("SET_CART", res.data);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   },
   async addItemToCart({ dispatch }, new_item) {
     // Get Token
@@ -54,7 +54,7 @@ const actions = {
     total_price = total_price.toString();
     console.log(total_price);
     let items = [];
-    items.push({product: new_item.id, quantity: new_item.quantity, price: total_price});
+    items.push({ product: new_item.id, quantity: new_item.quantity, price: total_price });
     await CartAPI.add(items, config)
       .then((res) => {
         console.log(res.data);
@@ -94,7 +94,7 @@ const actions = {
     };
 
     await CartAPI.removeByProductId(product_id, config)
-    .then((res) => {
+      .then((res) => {
         console.log(res.data.message);
         dispatch("getUserCart");
       })
@@ -114,7 +114,7 @@ const actions = {
     });
   },
   logoutCart({ commit }) {
-    commit("SET_CART", { user: '',cartItems: [], });
+    commit("SET_CART", { user: '', cartItems: [], });
   }
 };
 

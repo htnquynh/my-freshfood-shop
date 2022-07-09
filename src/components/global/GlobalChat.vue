@@ -1,27 +1,12 @@
 <template>
-  <beautiful-chat
-    :titleImageUrl="titleImageUrl"
-    title="Welcome to Fresh Shop"
-    :participants="participants"
-    :onMessageWasSent="onMessageWasSent"
-    :messageList="messageList"
-    :newMessagesCount="newMessagesCount"
-    :isOpen="isChatOpen"
-    :close="closeChat"
-    :open="openChat"
-    :showLauncher="true"
-    :showCloseButton="true"
-    :colors="colors"
-    :alwaysScrollToBottom="alwaysScrollToBottom"
-    :disableUserListToggle="true"
-    :messageStyling="messageStyling"
-  >
+  <beautiful-chat :titleImageUrl="titleImageUrl" title="Welcome to Fresh Shop" :participants="participants"
+    :onMessageWasSent="onMessageWasSent" :messageList="messageList" :newMessagesCount="newMessagesCount"
+    :isOpen="isChatOpen" :close="closeChat" :open="openChat" :showLauncher="true" :showCloseButton="true"
+    :colors="colors" :alwaysScrollToBottom="alwaysScrollToBottom" :disableUserListToggle="true"
+    :messageStyling="messageStyling">
     <template v-slot:header>
-      <img
-        style="border-radius: 50%"
-        width="50"
-        src="https://png.pngtree.com/png-vector/20191027/ourlarge/pngtree-fresh-logo-of-green-leaf-ecology-vector-collection-of-bright-and-png-image_1862265.jpg"
-      />
+      <img style="border-radius: 50%" width="50"
+        src="https://png.pngtree.com/png-vector/20191027/ourlarge/pngtree-fresh-logo-of-green-leaf-ecology-vector-collection-of-bright-and-png-image_1862265.jpg" />
       <h3 style="line-height: 50px; margin-left: 10px">
         Welcome to Fresh Shop
       </h3>
@@ -50,13 +35,13 @@ export default {
     return {
       socket: io.connect("http://localhost:5000"),
       titleImageUrl:
-        "https://a.slack-edge.com/66f9/img/avatars-teams/ava_0001-34.png",
+        "https://i.pinimg.com/originals/b4/6d/40/b46d40eb9f5f330fd966552f6c57839b.jpg",
       participants: [
         {
           id: "shop",
           name: "Shop",
           imageUrl:
-            "https://png.pngtree.com/png-vector/20191027/ourlarge/pngtree-fresh-logo-of-green-leaf-ecology-vector-collection-of-bright-and-png-image_1862265.jpg",
+            "https://i.pinimg.com/originals/b4/6d/40/b46d40eb9f5f330fd966552f6c57839b.jpg",
         },
         {
           id: "user2",
@@ -183,4 +168,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.sc-header--img {
+  width: 64px;
+  height: 64px;
+}
+</style>

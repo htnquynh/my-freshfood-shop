@@ -1,6 +1,8 @@
 <script setup>
 import { ref } from "vue";
+import { useRouter } from 'vue-router';
 import useTopic from "../composables/useTopic";
+const router = useRouter();
 
 const topics = useTopic();
 
@@ -10,6 +12,12 @@ const chevron_right_svg = (`<svg class="" viewBox="0 0 24 24" fill="none" xmlns=
 <path d="M8.00017 20.7501C8.19924 20.751 8.39029 20.6717 8.53017 20.5301L16.5302 12.5301C16.8226 12.2373 16.8226 11.7629 16.5302 11.4701L8.53017 3.47009C8.23466 3.19473 7.77416 3.20286 7.48855 3.48847C7.20294 3.77408 7.19481 4.23458 7.47017 4.53009L14.9402 12.0001L7.47017 19.4701C7.17772 19.7629 7.17772 20.2373 7.47017 20.5301C7.61006 20.6717 7.80111 20.751 8.00017 20.7501Z" fill="currentColor"/>
 </svg>
 `);
+
+const goDetail = (post_id) => {
+  console.log(post_id);
+  router.push(`/post?id=${post_id}`);
+};
+
 </script>
 
 <template>
@@ -91,7 +99,6 @@ const chevron_right_svg = (`<svg class="" viewBox="0 0 24 24" fill="none" xmlns=
 <script>
 import Post from "../components/Post.vue";
 import PostAPI from "../api/PostAPI";
-import { ref } from "vue";
 
 export default {
   components: {
@@ -114,9 +121,6 @@ export default {
   computed: {},
   watch: {},
   methods: {
-    goDetail(post_id) {
-      this.router.push(`/post?id=${post_id}`);
-    }
   },
 };
 </script>

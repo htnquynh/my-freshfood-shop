@@ -1,9 +1,8 @@
 <template>
-
-  <div class="shop-page">
+  <div class="container py-16">
     <div v-show="compareProducts.length == 0" class="table-compare-wrapper">
       <div class="w-full flex flex-col items-center p-8">
-        <img src="../assets/image/empty.png" class="w-full max-w-xs h-auto mx-auto">
+        <img src="../assets/image/empty.png" class="w-full max-w-xs h-auto mx-auto" alt="image">
         <p class="text-xl md:text-2xl font-medium py-8">Nothing to Compare</p>
 
         <router-link to='/shop'>
@@ -31,7 +30,7 @@
           <tr v-for="item in compareProducts" :key="item._id" class="row-product">
             <td class="td-table">
               <div class="col-product">
-                <img class="group-item-image" :src="item.image">
+                <img class="group-item-image" :src="item.image" alt="image">
                 <div class="product-spec">
                   <p class="product-category">{{ item.category }}</p>
                   <p class="product-name">{{ item.name }}</p>
@@ -39,9 +38,12 @@
               </div>
             </td>
             <td class="td-table">
-              <div class="product-price-unit">
+              <div v-if="item.status === 'Enable'" class="product-price-unit">
                 <p class="product-price">{{ $filters.toVND(item.price) }}</p>
                 <p class="product-unit">/ 1 kg</p>
+              </div>
+              <div v-else class="product-price-unit">
+                <p class="text-red-500">Unavailable</p>
               </div>
             </td>
 
@@ -53,7 +55,9 @@
 
             <td class="td-table">
               <div class="product-status">
-                <p v-if="item.quantity_remaining == '0'" class="text-sm font-bold text-fail uppercase">Out of stock</p>
+                <p v-if="item.status === 'Disable'"></p>
+                <p v-else-if="item.quantity_remaining == '0'" class="text-sm font-bold text-fail uppercase">Out of stock
+                </p>
                 <p v-else class="text-sm font-bold text-secondary uppercase">In stock</p>
               </div>
             </td>
@@ -115,6 +119,7 @@ export default {
   watch: {
   },
   created() {
+    console.log('compareProducts: ', this.compareProducts);
   },
   methods: {
     ...mapActions(["deleteCompareProduct", "getUserCart", "start_load", "stop_load"]),
@@ -182,24 +187,6 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-.home {
-  @apply flex flex-col;
-}
-
-.home>.header-page {
-  @apply w-full;
-}
-
-.page-content {
-  @apply w-full;
-  @apply p-4;
-}
-
-.shop-page {
-  @apply w-full max-w-5xl mx-auto;
-  @apply overflow-hidden;
-}
-
 .table-compare-wrapper {
   /* @apply p-4; */
   @apply w-full;

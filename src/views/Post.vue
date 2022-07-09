@@ -3,7 +3,7 @@ import BaseButtonPrimary from '../components/base/BaseButtonPrimary.vue'
 import BaseButtonSecondary from '../components/base/BaseButtonSecondary.vue'
 import BaseButtonText from '../components/base/BaseButtonText.vue'
 import useFormatDate from '../composables/useFormatDate';
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { useRoute } from "vue-router";
 import PostAPI from '../api/PostAPI';
 import getConfigHeaderAPI from '../api/config.js'
@@ -87,10 +87,9 @@ const submitComment = async () => {
   }
 };
 
-const userLikedPost = () => {
-  const result = post.value.likes.filter((item) => item.user._id == userLogin.value._id);
-  return result.length;
-};
+const userLikedPost = computed(() => {
+  return post.value.likes.some((item) => item.user._id == userLogin.value._id);
+});
 
 const likePost = async () => {
   if (is_login.value) {
@@ -126,7 +125,6 @@ const likePost = async () => {
         <div>
           <p class="text-justify font-semibold">{{ post.subtitle }}</p>
         </div>
-
       </div>
       <div class="aspect-220/370">
         <img :src="post.thumbnail" alt="Post cover" class="object-cover">
@@ -143,7 +141,7 @@ const likePost = async () => {
             </div>
           </div>
         </div>
-        <BaseButtonText v-if="!userLikedPost()" @click="likePost">
+        <BaseButtonText v-if="!userLikedPost" @click="likePost">
           <span>Like</span>
           <span v-html="heart_svg"></span>
         </BaseButtonText>
@@ -188,10 +186,8 @@ const likePost = async () => {
                 {{ item.content }}
               </div>
             </div>
-
           </div>
         </div>
-
       </div>
     </div>
   </div>
