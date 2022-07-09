@@ -1,4 +1,3 @@
-
 <template>
   <div class="py-12 max-w-xs mx-auto space-y-8">
     <h2 class="text-4xl font-bold text-center">Sign in</h2>
@@ -7,20 +6,33 @@
       <div class="space-y-4">
         <div class="space-y-2">
           <label class="block font-medium">Username</label>
-          <input class="w-full px-3 py-2 border border-black focus:outline-none" ref="username-input" type="text"
-            v-model="username" />
+          <input
+            class="w-full px-3 py-2 border border-black focus:outline-none"
+            ref="username-input"
+            type="text"
+            v-model="username"
+          />
         </div>
 
         <div class="space-y-2">
           <label class="block font-medium" for="">Password</label>
-          <input class="w-full px-3 py-2 border border-black focus:outline-none" ref="password-input" type="password"
-            v-model="password" />
+          <input
+            class="w-full px-3 py-2 border border-black focus:outline-none"
+            ref="password-input"
+            type="password"
+            v-model="password"
+          />
         </div>
       </div>
 
       <div class="flex justify-between items-center">
         <label class="check-box">
-          <input v-model="check" type="checkbox" value="remember-me" name="remember" />
+          <input
+            v-model="check"
+            type="checkbox"
+            value="remember-me"
+            name="remember"
+          />
           <span class="design"></span>
           <span class="text">Remember me</span>
         </label>
@@ -30,17 +42,27 @@
       </div>
 
       <div class="pt-4 w-full space-y-4">
-        <a ref="btn-login" @click="submitForm()"
-          class="block text-center w-full px-8 py-3 bg-violet-600 text-white uppercase font-semibold">
+        <a
+          ref="btn-login"
+          @click="submitForm()"
+          class="block text-center w-full px-8 py-3 bg-violet-600 text-white uppercase font-semibold"
+        >
           <span>Login to Account</span>
         </a>
 
-        <a ref="btn-login-with-google" @click="googleSignIn()"
-          class="block w-full px-8 py-2 border border-black uppercase font-semibold flex justify-center items-center gap-4 hover:bg-violet-100 transition-colors duration-200 ease-in">
+        <a
+          ref="btn-login-with-google"
+          @click="googleSignIn()"
+          class="block w-full px-8 py-2 border border-black uppercase font-semibold flex justify-center items-center gap-4 hover:bg-violet-100 transition-colors duration-200 ease-in"
+        >
           <span>Login with Google</span>
           <span class="h-6 w-1px bg-black"></span>
           <span>
-            <img class="w-8 h-8 object-contain" src="/assets/images/logo-google.png" alt="" />
+            <img
+              class="w-8 h-8 object-contain"
+              src="/assets/images/logo-google.png"
+              alt=""
+            />
           </span>
         </a>
 
@@ -84,8 +106,8 @@ export default {
           let user_login = JSON.stringify(res.data.accessToken);
           sessionStorage.setItem("user_login", user_login);
 
-          this.$store.dispatch('setUser', res.data.user).then(async () => {
-            console.log('Set user: ', res.data.user);
+          this.$store.dispatch("setUser", res.data.user).then(async () => {
+            console.log("Set user: ", res.data.user);
             await this.getUserCart();
             await this.getWishlist();
             this.stop_load();
@@ -102,6 +124,10 @@ export default {
           console.log(err.message);
           this.stop_load();
           this.$swal.fire("Uh oh!", "You have failed to login.", "error");
+        })
+        .finally(() => {
+          this.stop_load();
+          this.$router.push("/");
         });
     },
     async submitForm() {
