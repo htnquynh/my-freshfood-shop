@@ -33,7 +33,7 @@ import { mapGetters } from "vuex";
 export default {
   data() {
     return {
-      socket: io.connect("http://localhost:5000"),
+      socket: io.connect("https://shopfreshapi.herokuapp.com"),
       titleImageUrl:
         "https://i.pinimg.com/originals/b4/6d/40/b46d40eb9f5f330fd966552f6c57839b.jpg",
       participants: [
