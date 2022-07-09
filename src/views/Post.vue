@@ -175,6 +175,7 @@ const likePost = async () => {
             </div>
 
             <div v-else class="flex-shrink-0 w-10 h-10 rounded-full bg-gray-400">
+              <img src='../assets/image/avatar-placeholder.png' alt="Avatar" class="rounded-full" />
             </div>
 
             <div class="space-y-1">
