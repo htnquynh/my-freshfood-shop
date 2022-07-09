@@ -7,7 +7,7 @@ a {
 }
 
 .sc-chat-window {
-  z-index: 2000 !important;
+  z-index: 9999 !important;
   height: 500px !important;
 }
 

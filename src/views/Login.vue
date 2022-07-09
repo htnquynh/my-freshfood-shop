@@ -95,6 +95,7 @@ export default {
               "You have successfully logged in.",
               "success"
             );
+            this.$forceUpdate();
           });
         })
         .catch((err) => {
