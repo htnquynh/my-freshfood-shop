@@ -1,17 +1,19 @@
 <template>
   <div class="group-item-wrapper">
     <div class="group-item">
-      <img class="group-item-image" :src="item.product.image" >
+      <img class="group-item-image" :src="item.product.image" />
       <div class="group-item-spec">
         <div class="product-spec">
           <p class="product-category">{{ item.product.category }}</p>
           <p class="product-name">{{ item.product.name }}</p>
           <div class="product-price-unit">
-            <p class="product-price">{{ $filters.toVND(item.price) }}</p>
+            <p class="product-price">
+              {{ $filters.toVND(Number(item.price) / item.quantity) }}
+            </p>
             <p class="product-unit">/ 1 kg</p>
           </div>
 
-          <p class="product-qty">x {{item.quantity}}</p>
+          <p class="product-qty">x {{ item.quantity }}</p>
         </div>
       </div>
     </div>
@@ -22,7 +24,7 @@
 export default {
   props: ["item"],
   filters: {
-    toVND: function(value) {
+    toVND: function (value) {
       if (typeof value !== "number") {
         value = parseInt(value);
       }
@@ -34,13 +36,11 @@ export default {
       return formatter.format(value);
     },
   },
-  methods: {
-  },
-}
+  methods: {},
+};
 </script>
 
 <style lang="postcss" scoped>
-
 .group-item-wrapper {
   /* @apply flex-shrink-0; */
   @apply p-2;
@@ -104,6 +104,4 @@ export default {
   @apply text-right;
   @apply text-xs font-normal;
 }
-
-
 </style>

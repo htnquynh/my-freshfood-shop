@@ -54,7 +54,7 @@ export default {
   computed: {},
   filters: {
     toCODE: function (value) {
-      return "#O" + value.slice(-5);
+      return "#" + value.slice(-5);
     },
     toVND: function (value) {
       if (typeof value !== "number") {

@@ -190,7 +190,7 @@ export default {
             'success'
           );
           this.clearCart();
-          this.$router.push("/shop");
+          this.$router.push("/account/my-order");
         })
         .catch((err) => {
           this.stop_load();

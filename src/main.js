@@ -47,7 +47,7 @@ app.config.globalProperties.$filters = {
     return formatter.format(value);
   },
   toCODE: function (value) {
-    return "#O" + value.slice(-5);
+    return "#" + value.slice(-5);
   },
   toDateTime: function (value) {
     var date = new Date(value);
@@ -56,7 +56,7 @@ app.config.globalProperties.$filters = {
       month: "numeric",
       day: "numeric",
       hour: "numeric",
-      minute: "numeric",
+    minute: "numeric",
       second: "numeric",
       hour12: false,
       timeZone: "Asia/Ho_Chi_Minh",

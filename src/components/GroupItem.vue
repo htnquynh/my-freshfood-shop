@@ -9,24 +9,44 @@
         <!-- <p class="product-category">{{ product.category }}</p> -->
         <p class="font-semibold line-clamp-1">{{ product.name }}</p>
         <div class="flex items-center gap-1">
-          <p class="text-violet-600 font-semibold">{{ $filters.toVND(product.price) }}</p>
+          <p class="text-violet-600 font-semibold">
+            {{ $filters.toVND(product.price) }}
+          </p>
           <p class="">/ 1 kg</p>
         </div>
       </div>
 
       <div class="flex flex-col gap-1">
-        <button v-show="product.quantity_remaining > 0" class="w-4 h-4 text-violet-800" @click="addItemToCart()">
-          <svg viewBox="0 0 416 416" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <button
+          v-show="product.quantity_remaining > 0 && product.status === 'Enable'"
+          class="w-4 h-4 text-violet-800"
+          @click="addItemToCart()"
+        >
+          <svg
+            viewBox="0 0 416 416"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
             <path
               d="M416 208C416 225.69 401.67 240.01 384 240.01H240V384.01C240 401.7 225.67 416 208 416C190.33 416 176 401.7 176 384.01V240.01H32C14.33 240.01 0 225.69 0 208C0 190.31 14.33 176.01 32 176.01H176V32.01C176 14.32 190.33 0 208 0C225.67 0 240 14.32 240 32.01V176.01H384C401.7 176 416 190.3 416 208Z"
-              fill="currentColor" />
+              fill="currentColor"
+            />
           </svg>
         </button>
 
-        <button class="w-4 h-4 text-violet-800" @click="addToWishlist(product)">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor">
+        <button
+          v-show="product.quantity_remaining > 0 && product.status === 'Enable'"
+          class="w-4 h-4 text-violet-800"
+          @click="addToWishlist(product)"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 512 512"
+            fill="currentColor"
+          >
             <path
-              d="M244 84L255.1 96L267.1 84.02C300.6 51.37 347 36.51 392.6 44.1C461.5 55.58 512 115.2 512 185.1V190.9C512 232.4 494.8 272.1 464.4 300.4L283.7 469.1C276.2 476.1 266.3 480 256 480C245.7 480 235.8 476.1 228.3 469.1L47.59 300.4C17.23 272.1 0 232.4 0 190.9V185.1C0 115.2 50.52 55.58 119.4 44.1C164.1 36.51 211.4 51.37 244 84C243.1 84 244 84.01 244 84L244 84zM255.1 163.9L210.1 117.1C188.4 96.28 157.6 86.4 127.3 91.44C81.55 99.07 48 138.7 48 185.1V190.9C48 219.1 59.71 246.1 80.34 265.3L256 429.3L431.7 265.3C452.3 246.1 464 219.1 464 190.9V185.1C464 138.7 430.4 99.07 384.7 91.44C354.4 86.4 323.6 96.28 301.9 117.1L255.1 163.9z" />
+              d="M244 84L255.1 96L267.1 84.02C300.6 51.37 347 36.51 392.6 44.1C461.5 55.58 512 115.2 512 185.1V190.9C512 232.4 494.8 272.1 464.4 300.4L283.7 469.1C276.2 476.1 266.3 480 256 480C245.7 480 235.8 476.1 228.3 469.1L47.59 300.4C17.23 272.1 0 232.4 0 190.9V185.1C0 115.2 50.52 55.58 119.4 44.1C164.1 36.51 211.4 51.37 244 84C243.1 84 244 84.01 244 84L244 84zM255.1 163.9L210.1 117.1C188.4 96.28 157.6 86.4 127.3 91.44C81.55 99.07 48 138.7 48 185.1V190.9C48 219.1 59.71 246.1 80.34 265.3L256 429.3L431.7 265.3C452.3 246.1 464 219.1 464 190.9V185.1C464 138.7 430.4 99.07 384.7 91.44C354.4 86.4 323.6 96.28 301.9 117.1L255.1 163.9z"
+            />
           </svg>
         </button>
       </div>
@@ -40,8 +60,7 @@ import CartAPI from "../api/CartAPI";
 
 export default {
   props: ["product"],
-  created() {
-  },
+  created() {},
   computed: {
     ...mapGetters(["is_login", "wishlist"]),
   },
@@ -60,7 +79,13 @@ export default {
     },
   },
   methods: {
-    ...mapActions(["getUserCart", "addItemToWishlist", "addItemsToWishlist", "start_load", "stop_load"]),
+    ...mapActions([
+      "getUserCart",
+      "addItemToWishlist",
+      "addItemsToWishlist",
+      "start_load",
+      "stop_load",
+    ]),
     async addItemToCart() {
       if (this.is_login) {
         this.start_load();
@@ -68,15 +93,17 @@ export default {
         let config = {
           headers: { Authorization: "bearer " + token },
         };
-        let items = [{ product: this.product._id, quantity: 1, price: this.product.price }];
+        let items = [
+          { product: this.product._id, quantity: 1, price: this.product.price },
+        ];
         await CartAPI.add(items, config)
           .then((res) => {
             console.log(res.data);
             this.stop_load();
             this.$swal.fire(
-              'Oh great!',
-              'Add product to cart successfully!',
-              'success'
+              "Oh great!",
+              "Add product to cart successfully!",
+              "success"
             );
             this.getUserCart();
           })
@@ -84,17 +111,17 @@ export default {
             console.log(error);
             this.stop_load();
             this.$swal.fire(
-              'Oh no!',
-              'Something went wrong. Double check your work.',
-              'fail'
+              "Oh no!",
+              "Something went wrong. Double check your work.",
+              "fail"
             );
           });
       } else {
         this.stop_load();
         this.$swal.fire(
-          'Login to your account',
-          'You must be logged in to be able to add products to your cart.',
-          'warning'
+          "Login to your account",
+          "You must be logged in to be able to add products to your cart.",
+          "warning"
         );
         this.$router.push({
           name: "Login",
@@ -106,9 +133,9 @@ export default {
       const item = this.wishlist.find((item) => item._id == product._id);
       if (item) {
         this.$swal.fire(
-          'Uh oh!',
-          'Product already exists in wishlist!',
-          'info'
+          "Uh oh!",
+          "Product already exists in wishlist!",
+          "info"
         );
         return;
       }
@@ -118,14 +145,14 @@ export default {
         this.stop_load();
         this.addItemsToWishlist();
         this.$swal.fire(
-          'Great!',
-          'Added product to wishlist successfully!',
-          'success'
-        )
+          "Great!",
+          "Added product to wishlist successfully!",
+          "success"
+        );
       });
     },
   },
-}
+};
 </script>
 
 <style lang="postcss" scoped>
@@ -197,7 +224,6 @@ export default {
   @apply p-1;
 
   @apply rounded-lg;
-
 }
 
 .btn-add-to-cart {
