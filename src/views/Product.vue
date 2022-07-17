@@ -12,8 +12,14 @@
           <h2 class="text-5xl font-bold text-violet-700">{{ selectedProduct.name }}</h2>
 
           <div class="flex items-end gap-2">
-            <p class="text-2xl font-bold">{{ $filters.toVND(selectedProduct.price) }}</p>
-            <p class="">/ 1 kg</p>
+            <p v-if="selectedProduct.on_sale" class="text-2xl font-bold">
+              <span class="line-through text-gray-400">{{ $filters.toVND(selectedProduct.price) }}</span>
+              {{ $filters.toVND(sale_price(selectedProduct.price, selectedProduct.discount_type,
+                  selectedProduct.discount))
+              }}
+            </p>
+            <p v-else class="text-2xl font-bold">{{ $filters.toVND(selectedProduct.price) }}</p>
+            <p class="">/ {{ selectedProduct.unit }}</p>
           </div>
 
           <div class="w-max flex gap-2 items-center px-3 py-1.5 rounded-md bg-rose-400 text-white">
@@ -23,6 +29,10 @@
             </svg>
             <p><span class="font-bold">{{ selectedProduct.calo }}</span> kcal</p>
           </div>
+
+          <p class="">
+            EXP: {{ selectedProduct.exp?.substr(0, 10) }}
+          </p>
 
           <p class="text-justify">
             {{ selectedProduct.description.substring(0, 240) + '...' }}
@@ -50,7 +60,7 @@
               </button>
             </div>
 
-            <p class="py-4">{{ this.selectedProduct.quantity_remaining }}kg available</p>
+            <p class="py-4">{{ this.selectedProduct.quantity_remaining }}{{ this.selectedProduct.unit }} available</p>
           </div>
 
           <div class="flex">
@@ -143,24 +153,6 @@ export default {
   computed: {
     ...mapGetters(["is_login", "selectedProduct", "products", "wishlist"]),
   },
-  filters: {
-    toVND: function (value) {
-      try {
-        if (typeof value !== "number") {
-          value = parseInt(value);
-          // return value;
-        }
-        var formatter = new Intl.NumberFormat("vi-VN", {
-          style: "currency",
-          currency: "VND",
-          minimumFractionDigits: 0,
-        });
-        return formatter.format(value);
-      } catch (error) {
-        console.log(error);
-      }
-    },
-  },
   methods: {
     ...mapActions(
       [
@@ -173,6 +165,16 @@ export default {
         "stop_load",
       ]
     ),
+    sale_price(origin_price, discount_type, discount) {
+      const origin = Number(origin_price);
+
+      if (discount_type === "%") {
+        return origin - origin * discount / 100;
+      }
+
+      let result = origin - discount;
+      return result > 0 ? result : 0;
+    },
     minusQuantity() {
       if (this.quantity > 1) {
         this.quantity--;

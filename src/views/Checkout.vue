@@ -132,6 +132,23 @@ export default {
   },
   methods: {
     ...mapActions(["getUserCart", "clearCart", "start_load", "stop_load"]),
+    price_on_quantity(product, quantity) {
+      if (!product.on_sale) {
+        return Number(product.price) * quantity;
+      } else {
+        return this.sale_price(product.price, product.discount_type, product.discount) * quantity;
+      }
+    },
+    sale_price(origin_price, discount_type, discount) {
+      const origin = Number(origin_price);
+
+      if (discount_type === "%") {
+        return origin - origin * discount / 100;
+      }
+
+      let result = origin - discount;
+      return result > 0 ? result : 0;
+    },
     async getOrderInfo() {
       this.start_load();
       this.full_name = this.userLogin.full_name;
@@ -164,7 +181,7 @@ export default {
         orderItems.push({
           product: item.product._id,
           quantity: item.quantity,
-          price: item.price,
+          price: this.price_on_quantity(item.product, item.quantity),
         });
       }
       let order = {

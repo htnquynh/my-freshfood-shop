@@ -8,8 +8,17 @@
           <p class="product-name">{{ product.name }}</p>
         </div>
         <div v-if="product.status === 'Enable'" class="product-price-unit">
-          <p class="product-price">{{ $filters.toVND(product.price) }}</p>
-          <p class="product-unit">/ 1 kg</p>
+          <!-- <p class="product-price">{{ $filters.toVND(product.price) }}</p>
+          <p class="product-unit">/ 1 kg</p> -->
+          <p v-if="product.on_sale" class="product-price">
+            <span class="line-through text-gray-400 font-light">{{ $filters.toVND(product.price) }}</span>
+            {{ $filters.toVND(sale_price(product.price, product.discount_type, product.discount)) }}
+          </p>
+          <p v-else class="product-price">
+            {{ $filters.toVND(product.price) }}
+          </p>
+
+          <p class="product-unit">/ {{ product.unit }}</p>
         </div>
         <div v-else class="product-price-unit">
           <p class="text-red-500 font-medium">Unavailable</p>
@@ -70,6 +79,16 @@ export default {
   },
   methods: {
     ...mapActions(["getUserCart", "deleteWishlistItem", "addItemsToWishlist", "start_load", "stop_load"]),
+    sale_price(origin_price, discount_type, discount) {
+      const origin = Number(origin_price);
+
+      if (discount_type === "%") {
+        return origin - origin * discount / 100;
+      }
+
+      let result = origin - discount;
+      return result > 0 ? result : 0;
+    },
     async deleteItem(product_id) {
       this.start_load();
       await this.deleteWishlistItem(product_id)

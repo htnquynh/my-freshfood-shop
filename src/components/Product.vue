@@ -33,8 +33,14 @@
         <p class="text-gray-700">{{ product.category }}</p>
         <p class="text-lg font-bold line-clamp-2 cursor-pointer hover:text-sky-500">{{ product.name }}</p>
         <div class="pt-2 flex items-center justify-end gap-1">
-          <p class="font-bold">{{ $filters.toVND(product.price) }}</p>
-          <p class="">/ 1 kg</p>
+          <p v-if="product.on_sale" class="font-bold">
+            <span class="line-through text-gray-400 font-light">{{ $filters.toVND(product.price) }}</span>
+            {{ $filters.toVND(sale_price(product.price, product.discount_type, product.discount)) }}
+          </p>
+          <p v-else class="font-bold">
+            {{ $filters.toVND(product.price) }}
+          </p>
+          <!-- <p class="">/ {{ product.unit }}</p> -->
         </div>
       </div>
     </div>
@@ -59,20 +65,6 @@ export default {
   computed: {
     ...mapGetters(["is_login", "compareProducts", "wishlist"]),
   },
-  filters: {
-    toVND: function (value) {
-      if (typeof value !== "number") {
-        value = parseInt(value);
-        // return value;
-      }
-      var formatter = new Intl.NumberFormat("vi-VN", {
-        style: "currency",
-        currency: "VND",
-        minimumFractionDigits: 0,
-      });
-      return formatter.format(value);
-    },
-  },
   methods: {
     ...mapActions([
       "start_load",
@@ -86,6 +78,16 @@ export default {
       "addItemsToWishlist",
       "getWishlist",
     ]),
+    sale_price(origin_price, discount_type, discount) {
+      const origin = Number(origin_price);
+
+      if (discount_type === "%") {
+        return origin - origin * discount / 100;
+      }
+
+      let result = origin - discount;
+      return result > 0 ? result : 0;
+    },
     detailProduct() {
       this.getSelectedProduct(this.product._id);
       const id = this.product._id;
@@ -124,7 +126,7 @@ export default {
         let config = {
           headers: { Authorization: "bearer " + token },
         };
-        let items = [{ product: this.product._id, quantity: 1, price: this.product.price }];
+        let items = [{ product: this.product._id, quantity: 1, price: this.sale_price(this.product.price, this.product.discount_type, this.product.discount) }];
         await CartAPI.add(items, config)
           .then((res) => {
             console.log(res.data);

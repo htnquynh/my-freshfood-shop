@@ -7,8 +7,17 @@
           <p class="product-category">{{ item.product.category }}</p>
           <p class="product-name">{{ item.product.name }}</p>
           <div v-if="item.product.status === 'Enable'" class="product-price-unit">
-            <p class="product-price">{{ $filters.toVND(item.product.price) }}</p>
-            <p class="product-unit">/ 1 kg</p>
+            <!-- <p class="product-price">{{ $filters.toVND(item.product.price) }}</p> -->
+
+            <p v-if="item.product.on_sale" class="product-price">
+              <span class="line-through text-gray-400 font-light">{{ $filters.toVND(item.product.price) }}</span>
+              {{ $filters.toVND(sale_price(item.product.price, item.product.discount_type, item.product.discount)) }}
+            </p>
+            <p v-else class="product-price">
+              {{ $filters.toVND(item.product.price) }}
+            </p>
+
+            <p class="product-unit">/ {{ item.product.unit }}</p>
           </div>
           <div v-else class="">
             <p class="text-red-500">Unavailable</p>
@@ -83,6 +92,16 @@ export default {
   },
   methods: {
     ...mapActions(["addItemToCart", "removeByProductId", "getSelectedProduct", "start_load", "stop_load"]),
+    sale_price(origin_price, discount_type, discount) {
+      const origin = Number(origin_price);
+
+      if (discount_type === "%") {
+        return origin - origin * discount / 100;
+      }
+
+      let result = origin - discount;
+      return result > 0 ? result : 0;
+    },
     updateQuantity() {
       if (this.new_quantity < 1) {
         this.new_quantity = this.item.quantity;

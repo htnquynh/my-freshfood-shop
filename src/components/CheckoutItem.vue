@@ -1,17 +1,26 @@
 <template>
   <div class="group-item-wrapper">
     <div class="group-item">
-      <img class="group-item-image" :src="item.product.image" >
+      <img class="group-item-image" :src="item.product.image" alt="image">
       <div class="group-item-spec">
         <div class="product-spec">
           <p class="product-category">{{ item.product.category }}</p>
           <p class="product-name">{{ item.product.name }}</p>
           <div class="product-price-unit">
-            <p class="product-price">{{ $filters.toVND(item.product.price) }}</p>
-            <p class="product-unit">/ 1 kg</p>
+            <!-- <p class="product-price">{{ $filters.toVND(item.product.price) }}</p>
+            <p class="product-unit">/ 1 kg</p> -->
+            <p v-if="item.product.on_sale" class="product-price">
+              <span class="line-through text-gray-400 font-light">{{ $filters.toVND(item.product.price) }}</span>
+              {{ $filters.toVND(sale_price(item.product.price, item.product.discount_type, item.product.discount)) }}
+            </p>
+            <p v-else class="product-price">
+              {{ $filters.toVND(item.product.price) }}
+            </p>
+
+            <p class="product-unit">/ {{ item.product.unit }}</p>
           </div>
         </div>
-        <p class="product-qty">x {{item.quantity}}</p>
+        <p class="product-qty">x {{ item.quantity }}</p>
       </div>
     </div>
   </div>
@@ -21,7 +30,7 @@
 export default {
   props: ["item"],
   filters: {
-    toVND: function(value) {
+    toVND: function (value) {
       if (typeof value !== "number") {
         value = parseInt(value);
       }
@@ -34,12 +43,21 @@ export default {
     },
   },
   methods: {
+    sale_price(origin_price, discount_type, discount) {
+      const origin = Number(origin_price);
+
+      if (discount_type === "%") {
+        return origin - origin * discount / 100;
+      }
+
+      let result = origin - discount;
+      return result > 0 ? result : 0;
+    },
   },
 }
 </script>
 
 <style lang="postcss" scoped>
-
 .group-item-wrapper {
   @apply w-full;
 }
@@ -92,5 +110,4 @@ export default {
   @apply text-right;
   @apply text-sm font-normal;
 }
-
 </style>

@@ -8,13 +8,28 @@ const state = {
   visibleMiniCart: false,
 };
 
+const sale_price = function (origin_price, discount_type, discount) {
+  const origin = Number(origin_price);
+
+  if (discount_type === "%") {
+    return origin - origin * discount / 100;
+  }
+
+  let result = origin - discount;
+  return result > 0 ? result : 0;
+}
+
 const getters = {
   cart: (state) => state.cart,
   totalPrice: (state) => {
     let cartTotalPrice = 0;
 
     state.cart.cartItems.filter(item => item.product.status === 'Enable').forEach((item) => {
-      cartTotalPrice += parseInt(item.price);
+
+      if (!item.product.on_sale)
+        cartTotalPrice += parseInt(Number(item.product.price) * item.quantity);
+      else
+        cartTotalPrice += sale_price(item.product.price, item.product.discount_type, item.product.discount) * item.quantity;
     });
 
     return cartTotalPrice;
